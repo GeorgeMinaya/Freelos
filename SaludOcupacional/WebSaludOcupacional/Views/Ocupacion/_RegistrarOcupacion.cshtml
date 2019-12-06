@@ -1,0 +1,54 @@
+﻿
+@using Salud.Ocupacional.BE;
+@model OcupacionBE.ResponseOcupacionBE
+
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/Script/WizardJs")
+
+@using (Ajax.BeginForm("RegistrarOcupacion", "Ocupacion"
+    , new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "frmOcupacionR" }
+    , new { id = "frmOcupacionR", enctype = "multipart/form-data" }))
+{
+    <div class="modal-register">
+        <div class="col-md-11">
+            <div class="modal-title letra-acl Alert-Head" id="myModalLabel">
+                <i class="mdi Alert-Head mdi-file-find"></i> Registrar una nueva ocupación
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close Alert-Head" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-12">
+                <div id="asistente" class="form_wizard wizard_horizontal">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon contenido-rojo"><span class="mdi mdi-relative-scale" aria-hidden="true"></span></span>
+                                    @Html.TextBoxFor(m => m.Occupation, new { value = "", autocomplete = "new-password", @placeholder = "Nombre ocupación", @class = "form-control", @id = "txtOcupacion", @Title = "Ocupación" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="ValidaInputs('frmOcupacionR');" class="btn btn-danger"><i class="fa fa-save"></i> Guardar</button>
+                        @*<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-mail-forward"></i></button>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @if (ViewBag.Message != null)
+        {
+            <span class="field-validation-error">@ViewBag.Message</span>
+        }
+    </div>
+    @Html.TextBoxFor(m => m.Activo, "True", new { @class = "HiddenFor" })
+
+    }

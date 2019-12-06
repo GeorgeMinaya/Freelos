@@ -1,0 +1,609 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="respirator" Class="BDSaludOcupacionalDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-TPBFC7T\SQLEXPRESS;Initial Catalog=respirator;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="Salud.Ocupacional.DM.Properties.Settings" SettingsPropertyName="respiratorConnectionString4" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.UserType" Member="UserType">
+    <Type Name="UserType">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserType" Member="UserType1" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Association Name="UserType_User" Member="User" ThisKey="ID" OtherKey="Type" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[User]" Member="User">
+    <Type Name="User">
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DNI" Type="System.String" DbType="NChar(8) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName1" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName2" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Mobile" Type="System.String" DbType="Char(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="RegisterDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="LastAccesDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="User_Doctor" Member="Doctor" ThisKey="DNI" OtherKey="DNIdoctor" Type="Doctor" />
+      <Association Name="User_Contract" Member="Contract" ThisKey="DNI" OtherKey="DraegerUser" Type="Contract" />
+      <Association Name="UserType_User" Member="UserType" ThisKey="Type" OtherKey="ID" Type="UserType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Doctor" Member="Doctor">
+    <Type Name="Doctor">
+      <Column Name="IdDoctor" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DNIdoctor" Type="System.String" DbType="NChar(8) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Specialism" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="CMP" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="RENumber" Type="System.String" DbType="Char(10)" CanBeNull="true" />
+      <Column Name="Company" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="User_Doctor" Member="User" ThisKey="DNIdoctor" OtherKey="DNI" Type="User" IsForeignKey="true" />
+      <Association Name="Company_Doctor" Member="Company1" ThisKey="Company" OtherKey="IDCompany" Type="Company" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Company" Member="Company">
+    <Type Name="Company">
+      <Column Name="IDCompany" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RUC" Type="System.String" DbType="NChar(12) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Tradename" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Contactname" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="ContactLastname" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="ContactLastname2" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Cellphone" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Company_Doctor" Member="Doctor" ThisKey="IDCompany" OtherKey="Company" Type="Doctor" />
+      <Association Name="Company_Activity" Member="Activity" ThisKey="IDCompany" OtherKey="IDCompany" Type="Activity" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Menu" Member="Menu">
+    <Type Name="Menu">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TypeUser" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Menu" Member="Menu1" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="URL" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Icono" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Employee" Member="Employee">
+    <Type Name="Employee">
+      <Column Name="IdTrabajador" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DNIemployee" Type="System.String" DbType="NChar(8) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Birthdate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Occupation" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Schedule" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Company" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="WorkCondition" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DateEntry" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="RiskFactor" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="RiskFactor_Employee" Member="RiskFactor1" ThisKey="RiskFactor" OtherKey="ID" Type="RiskFactor" IsForeignKey="true" />
+      <Association Name="OccupationType_Employee" Member="OccupationType" ThisKey="Occupation" OtherKey="ID" Type="OccupationType" IsForeignKey="true" />
+      <Association Name="Schedule_Employee" Member="Schedule1" ThisKey="Schedule" OtherKey="ID" Type="Schedule" IsForeignKey="true" />
+      <Association Name="WorkCondition_Employee" Member="WorkCondition1" ThisKey="WorkCondition" OtherKey="ID" Type="WorkCondition" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RiskFactor" Member="RiskFactor">
+    <Type Name="RiskFactor">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RiskFactor" Member="RiskFactor1" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="RiskFactor_Employee" Member="Employee" ThisKey="ID" OtherKey="RiskFactor" Type="Employee" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OccupationType" Member="OccupationType">
+    <Type Name="OccupationType">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Occupation" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="OccupationType_Employee" Member="Employee" ThisKey="ID" OtherKey="Occupation" Type="Employee" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Schedule" Member="Schedule">
+    <Type Name="Schedule">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Schedule" Member="Schedule1" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Schedule_Employee" Member="Employee" ThisKey="ID" OtherKey="Schedule" Type="Employee" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WorkCondition" Member="WorkCondition">
+    <Type Name="WorkCondition">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="WorkCondition" Member="WorkCondition1" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="WorkCondition_Employee" Member="Employee" ThisKey="ID" OtherKey="WorkCondition" Type="Employee" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Respirator" Member="Respirator">
+    <Type Name="Respirator">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Brand" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Model" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Respirator_Activity" Member="Activity" ThisKey="ID" OtherKey="Respirator" Type="Activity" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Activity" Member="Activity">
+    <Type Name="Activity">
+      <Column Name="IDactivity" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDCompany" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Contract" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StartHour" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="FinishHour" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="Respirator" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Filter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Supervisor" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Activity_IndicatorSingle" Member="IndicatorSingle" ThisKey="IDactivity" OtherKey="IDactivity" Type="IndicatorSingle" />
+      <Association Name="Company_Activity" Member="Company" ThisKey="IDCompany" OtherKey="IDCompany" Type="Company" IsForeignKey="true" />
+      <Association Name="Respirator_Activity" Member="Respirator1" ThisKey="Respirator" OtherKey="ID" Type="Respirator" IsForeignKey="true" />
+      <Association Name="Filter_Activity" Member="Filter1" ThisKey="Filter" OtherKey="IDFilter" Type="Filter" IsForeignKey="true" />
+      <Association Name="Contract_Activity" Member="Contract1" ThisKey="Contract" OtherKey="IDContract" Type="Contract" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Filter" Member="Filter">
+    <Type Name="Filter">
+      <Column Name="IDFilter" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Filter" Member="Filter1" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Filter_Activity" Member="Activity" ThisKey="IDFilter" OtherKey="Filter" Type="Activity" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Contract" Member="Contract">
+    <Type Name="Contract">
+      <Column Name="IDContract" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DraegerUser" Type="System.String" DbType="NChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="Amount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Company" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="InitialDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="FinalDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Dascription" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Celular" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Contract_Activity" Member="Activity" ThisKey="IDContract" OtherKey="Contract" Type="Activity" />
+      <Association Name="User_Contract" Member="User" ThisKey="DraegerUser" OtherKey="DNI" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IndicatorSingle" Member="IndicatorSingle">
+    <Type Name="IndicatorSingle">
+      <Column Name="IDindicator" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDactivity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EmployeeID" Type="System.String" DbType="NChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Filepath" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="SerialNumber" Type="System.String" DbType="NChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="TimeGood" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="TimeBad" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="TimeNotUsed" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="MaxPressure" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MinPressure" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MaxTemperature" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MinTemperature" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="MaxRH" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MinRH" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UseFactor" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="IDCompany" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IDContract" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Activity_IndicatorSingle" Member="Activity" ThisKey="IDactivity" OtherKey="IDactivity" Type="Activity" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.Sp_Insert_Usuer" Method="Sp_Insert_Usuer">
+    <Parameter Name="DNI" Parameter="dNI" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="LastName1" Parameter="lastName1" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="LastName2" Parameter="lastName2" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Type" Parameter="type" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Password" Parameter="password" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Mobile" Parameter="mobile" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="Sp_Insert_UsuerResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="NChar(8) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Update_Usuer" Method="Sp_Update_Usuer">
+    <Parameter Name="DNI" Parameter="dNI" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="LastName1" Parameter="lastName1" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="LastName2" Parameter="lastName2" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Type" Parameter="type" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Password" Parameter="password" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Mobile" Parameter="mobile" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="Sp_Update_UsuerResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="NChar(8) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Delete_Usuer" Method="Sp_Delete_Usuer">
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Delete_UsuerResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(159) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Delete_Doctor" Method="Sp_Delete_Doctor">
+    <Parameter Name="IdDoctor" Parameter="idDoctor" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Delete_DoctorResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(167) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Delete_Empresa" Method="Sp_Delete_Empresa">
+    <Parameter Name="IDCompany" Parameter="iDCompany" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Delete_EmpresaResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(138) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Insert_Menu" Method="Sp_Insert_Menu">
+    <Parameter Name="TypeUser" Parameter="typeUser" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Menu" Parameter="menu" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="URL" Parameter="uRL" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Icono" Parameter="icono" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Insert_MenuResult">
+      <Column Name="Menu" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(135)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Update_Menu" Method="Sp_Update_Menu">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="TypeUser" Parameter="typeUser" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Menu" Parameter="menu" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="URL" Parameter="uRL" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Icono" Parameter="icono" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Update_MenuResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(135)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Delete_Menu" Method="Sp_Delete_Menu">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Delete_MenuResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(134)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Delete_Trabajador" Method="Sp_Delete_Trabajador">
+    <Parameter Name="IdTrabajador" Parameter="idTrabajador" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Delete_TrabajadorResult">
+      <Column Name="Employee" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(89) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Update_Ocupacion" Method="Sp_Update_Ocupacion">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Occupation" Parameter="occupation" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Update_OcupacionResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Insert_Ocupacion" Method="Sp_Insert_Ocupacion">
+    <Parameter Name="Occupation" Parameter="occupation" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Insert_OcupacionResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Delete_Ocupacion" Method="Sp_Delete_Ocupacion">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Delete_OcupacionResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Delete_Guardia" Method="Sp_Delete_Guardia">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Delete_GuardiaResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Insert_Guardia" Method="Sp_Insert_Guardia">
+    <Parameter Name="Schedule" Parameter="schedule" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Insert_GuardiaResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Update_Guardia" Method="Sp_Update_Guardia">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Schedule" Parameter="schedule" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Update_GuardiaResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Delete_Condicion" Method="Sp_Delete_Condicion">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Delete_CondicionResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Delete_FactorRiesgo" Method="Sp_Delete_FactorRiesgo">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Delete_FactorRiesgoResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Insert_Condicion" Method="Sp_Insert_Condicion">
+    <Parameter Name="RiskFactor" Parameter="riskFactor" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Insert_CondicionResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Insert_FactorRiesgo" Method="Sp_Insert_FactorRiesgo">
+    <Parameter Name="RiskFactor" Parameter="riskFactor" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Insert_FactorRiesgoResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Update_Condicion" Method="Sp_Update_Condicion">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="WorkCondition" Parameter="workCondition" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Update_CondicionResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Update_FactorRiesgo" Method="Sp_Update_FactorRiesgo">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="RiskFactor" Parameter="riskFactor" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Update_FactorRiesgoResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Delete_MarcaModelo" Method="Sp_Delete_MarcaModelo">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Delete_MarcaModeloResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(63) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Insert_MarcaModelo" Method="Sp_Insert_MarcaModelo">
+    <Parameter Name="Brand" Parameter="brand" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Model" Parameter="model" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Insert_MarcaModeloResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(63) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Update_MarcaModelo" Method="Sp_Update_MarcaModelo">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Brand" Parameter="brand" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="Model" Parameter="model" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Update_MarcaModeloResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(63) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Update_Doctor" Method="Sp_Update_Doctor">
+    <Parameter Name="IdDoctor" Parameter="idDoctor" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DNIdoctor" Parameter="dNIdoctor" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Specialism" Parameter="specialism" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="CMP" Parameter="cMP" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="RENumber" Parameter="rENumber" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="Company" Parameter="company" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Update_DoctorResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Insert_Doctor" Method="Sp_Insert_Doctor">
+    <Parameter Name="DNIdoctor" Parameter="dNIdoctor" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Specialism" Parameter="specialism" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="CMP" Parameter="cMP" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="RENumber" Parameter="rENumber" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="Company" Parameter="company" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Insert_DoctorResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Delete_Actividad" Method="Sp_Delete_Actividad">
+    <Parameter Name="IDactivity" Parameter="iDactivity" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Delete_ActividadResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Insert_Actividad" Method="Sp_Insert_Actividad">
+    <Parameter Name="IDCompany" Parameter="iDCompany" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Date" Parameter="date" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="Contract" Parameter="contract" Type="System.Int32" DbType="Int" />
+    <Parameter Name="StartHour" Parameter="startHour" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="FinishHour" Parameter="finishHour" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="Respirator" Parameter="respirator" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Filter" Parameter="filter" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Quantity" Parameter="quantity" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Supervisor" Parameter="supervisor" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="Description" Parameter="description" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Insert_ActividadResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Update_Actividad" Method="Sp_Update_Actividad">
+    <Parameter Name="IDactivity" Parameter="iDactivity" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IDCompany" Parameter="iDCompany" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Date" Parameter="date" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="Contract" Parameter="contract" Type="System.Int32" DbType="Int" />
+    <Parameter Name="StartHour" Parameter="startHour" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="FinishHour" Parameter="finishHour" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="Respirator" Parameter="respirator" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Filter" Parameter="filter" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Quantity" Parameter="quantity" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Supervisor" Parameter="supervisor" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="Description" Parameter="description" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Update_ActividadResult">
+      <Column Name="Activity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Delete_Contrato" Method="Sp_Delete_Contrato">
+    <Parameter Name="IDContract" Parameter="iDContract" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Delete_ContratoResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="NChar(8) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Insert_Empresa" Method="Sp_Insert_Empresa">
+    <Parameter Name="RUC" Parameter="rUC" Type="System.String" DbType="VarChar(24)" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Tradename" Parameter="tradename" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Address" Parameter="address" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="Contactname" Parameter="contactname" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="ContactLastname" Parameter="contactLastname" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="ContactLastname2" Parameter="contactLastname2" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="Cellphone" Parameter="cellphone" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Insert_EmpresaResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(164) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Update_Empresa" Method="Sp_Update_Empresa">
+    <Parameter Name="IDCompany" Parameter="iDCompany" Type="System.Int32" DbType="Int" />
+    <Parameter Name="RUC" Parameter="rUC" Type="System.String" DbType="VarChar(24)" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Tradename" Parameter="tradename" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Address" Parameter="address" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="Contactname" Parameter="contactname" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="ContactLastname" Parameter="contactLastname" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="ContactLastname2" Parameter="contactLastname2" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="Cellphone" Parameter="cellphone" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Update_EmpresaResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(101) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_LoginUsuer" Method="Sp_LoginUsuer">
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="Password" Parameter="password" Type="System.String" DbType="VarChar(50)" />
+    <ElementType Name="Sp_LoginUsuerResult">
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DNI" Type="System.String" DbType="NChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName1" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastName2" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Mobile" Type="System.String" DbType="Char(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="RegisterDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="LastAccesDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Insert_Contrato" Method="Sp_Insert_Contrato">
+    <Parameter Name="DraegerUser" Parameter="draegerUser" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Amount" Parameter="amount" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Company" Parameter="company" Type="System.Int32" DbType="Int" />
+    <Parameter Name="InitialDate" Parameter="initialDate" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="FinalDate" Parameter="finalDate" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Quantity" Parameter="quantity" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Dascription" Parameter="dascription" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="Celular" Parameter="celular" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(150)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Insert_ContratoResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="NChar(8) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Update_Contrato" Method="Sp_Update_Contrato">
+    <Parameter Name="IDContract" Parameter="iDContract" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DraegerUser" Parameter="draegerUser" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Amount" Parameter="amount" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Company" Parameter="company" Type="System.Int32" DbType="Int" />
+    <Parameter Name="InitialDate" Parameter="initialDate" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="FinalDate" Parameter="finalDate" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Quantity" Parameter="quantity" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Dascription" Parameter="dascription" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="Celular" Parameter="celular" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="VarChar(150)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Update_ContratoResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="NChar(8) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Update_Trabajador" Method="Sp_Update_Trabajador">
+    <Parameter Name="IdTrabajador" Parameter="idTrabajador" Type="System.Int32" DbType="Int" />
+    <Parameter Name="DNIemployee" Parameter="dNIemployee" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Birthdate" Parameter="birthdate" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="Occupation" Parameter="occupation" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Schedule" Parameter="schedule" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Company" Parameter="company" Type="System.Int32" DbType="Int" />
+    <Parameter Name="WorkCondition" Parameter="workCondition" Type="System.Int32" DbType="Int" />
+    <Parameter Name="RiskFactor" Parameter="riskFactor" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Update_TrabajadorResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Sp_Insert_Trabajador" Method="Sp_Insert_Trabajador">
+    <Parameter Name="DNIemployee" Parameter="dNIemployee" Type="System.String" DbType="VarChar(16)" />
+    <Parameter Name="Birthdate" Parameter="birthdate" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="Occupation" Parameter="occupation" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Schedule" Parameter="schedule" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Company" Parameter="company" Type="System.Int32" DbType="Int" />
+    <Parameter Name="WorkCondition" Parameter="workCondition" Type="System.Int32" DbType="Int" />
+    <Parameter Name="RiskFactor" Parameter="riskFactor" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="Activo" Parameter="activo" Type="System.Boolean" DbType="Bit" />
+    <ElementType Name="Sp_Insert_TrabajadorResult">
+      <Column Name="Codigo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(90) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+</Database>

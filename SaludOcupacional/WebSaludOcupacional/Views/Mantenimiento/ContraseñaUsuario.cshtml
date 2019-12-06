@@ -1,0 +1,202 @@
+﻿@model WebSaludOcupacional.Models.MantenimientoModel.MantenimientoUsuarioModel
+
+@{
+    ViewBag.Title = "Sealcheckchip - " + Model.Usuario.perfilList.FirstOrDefault(x => x.IdPerfil.Equals(Model.Usuario.Type)).Nombre;
+    ViewBag.TextList = "Listado Maestro Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.classModal = null;
+}
+@using (Ajax.BeginForm("ContraseñaUsuario", "Mantenimiento"
+    , new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "frmUsuario" }
+    , new { id = "frmUsuario", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="row page-titles">
+            <div class="col-md-5 col-8 align-self-center">
+                <h3 class="text-themecolor m-b-0 m-t-0">Perfil</h3>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="~/Home/">Home</a></li>
+                    <li class="breadcrumb-item active">Perfil</li>
+                </ol>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <!-- Row -->
+        <div class="row">
+            <!-- Column -->
+            <div class="col-lg-4 col-xlg-3 col-md-5">
+                <div class="card">
+                    <div class="card-block">
+                        <center class="m-t-30">
+                            <div class="img-circle" width="150" id="LoginUsuer">@Model.Usuario.Name.Substring(0, 1)</div>
+                            <h4 class="card-title m-t-10">@Model.Usuario.Name @Model.Usuario.LastName1 @Model.Usuario.LastName2</h4>
+                            <h6 class="card-subtitle">@Model.Usuario.perfilList.FirstOrDefault(x => x.IdPerfil.Equals(@Model.Usuario.Type)).Nombre</h6>
+                            <div class="row text-center justify-content-md-center">
+                                <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-people"></i> <font class="font-medium">254</font></a></div>
+                                <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-picture"></i> <font class="font-medium">54</font></a></div>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+            </div>
+            <!-- Column -->
+            <!-- Column -->
+            <div class="col-lg-8 col-xlg-9 col-md-7">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="DNI" class="col-md-12">DNI Usuario</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-key" aria-hidden="true"></span></span>
+                                        @Html.TextBoxFor(m => m.Usuario.DNI, Model.Usuario.DNI, new { value = Model.Usuario.DNI, @placeholder = "DNI", autocomplete = "new-password", @class = "form-control Disable", @id = "txtLogin", @Title = "DNI", maxlength = "8", onkeypress = "return soloNumeros(event);" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-12">Contraseña</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-lock-open" aria-hidden="true"></span></span>
+                                        @Html.PasswordFor(m => m.Usuario.Password, new { value = Model.Usuario.Password, @placeholder = "Contraseña", autocomplete = "new-password", @autocapitalize = "off", @class = "form-control", @id = "txtClave", @Title = "Contraseña" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="Nombre_Completo" class="col-md-12">Nombre Completo</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account" aria-hidden="true"></span></span>
+                                        @Html.TextBoxFor(m => m.Usuario.Name, new { value = Model.Usuario.Name, @placeholder = "Nombre Completo", @class = "form-control Disable", @id = "txtNombrecompleto", @Title = "Nombre Completo" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-email" class="col-md-12">Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-gmail" aria-hidden="true"></span></span>
+                                        @Html.TextBoxFor(m => m.Usuario.Email, new { @placeholder = "E-mail", @autocapitalize = "off", @class = "form-control Disable", @id = "txtMail", @Title = "E-Mail" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-12">Apellido Paterno</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-star" aria-hidden="true"></span></span>
+                                        @Html.TextBoxFor(m => m.Usuario.LastName1, new { @placeholder = "Apellido Paterno", @autocapitalize = "off", @class = "form-control Disable", @id = "txtPaterno", @Title = "Apellido Paterno" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-12">Apellido Materno</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-star-variant" aria-hidden="true"></span></span>
+                                        @Html.TextBoxFor(m => m.Usuario.LastName2, new { @placeholder = "Apellido Materno", @autocapitalize = "off", @class = "form-control Disable", @id = "txtMaterno", @Title = "Apellido Materno" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button type="button" onclick="ValidaInputs('frmUsuario');" class="btn btn-danger"><i class="fa fa-save"></i> Guardar Cambios</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Column -->
+        </div>
+        <!-- Row -->
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+    </div>
+    if (@ViewBag.Message != null)
+    {
+        <script>
+            setTimeout('ModalOcultoAutomatico("Login/")', 3000);
+        </script>
+        if (ViewBag.Message.Estado != 0)
+        {
+            ViewBag.classModal = "modal-Alert-Error";
+        }
+        else
+        {
+            ViewBag.classModal = "modal-Alert-Ok";
+        }
+        <div id="modal-Alert" class="modal fade" tabindex="-1" role="dialog" style="overflow-y:auto;">
+            <div class="modal-dialog " role="document">
+                <div class="modal-content" id="modalbody">
+                    <div class="@ViewBag.classModal">
+                        <div class="col-md-11">
+                            <div class="modal-title letra-acl Alert-Head" id="myModalLabel">
+                                <i class="mdi Alert-Head mdi-account-check"></i> @ViewBag.Message.Title
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="close Alert-Head" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        @ViewBag.Message.Message
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+    @Html.TextBoxFor(m => m.Usuario.IdUsuario, new { value = @Model.Usuario.IdUsuario, @class = "HiddenFor" })
+    @Html.TextBoxFor(m => m.Usuario.Type, new { value = @Model.Usuario.Type, @class = "HiddenFor" })
+    @Html.TextBoxFor(m => m.Usuario.Mobile, "ContraseñaUsuario", new { @class = "HiddenFor" })
+    @Html.TextBoxFor(m => m.Usuario.Activo, "True", new { @class = "HiddenFor" })
+    @*
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-star" aria-hidden="true"></span></span>
+                            @Html.TextBoxFor(m => m.LastName1, new { @placeholder = "Apellido Paterno", @autocapitalize = "off", @class = "form-control", @id = "txtPaterno", @Title = "Apellido Paterno" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-star-variant" aria-hidden="true"></span></span>
+                            @Html.TextBoxFor(m => m.LastName2, new { @placeholder = "Apellido Materno", @autocapitalize = "off", @class = "form-control", @id = "txtMaterno", @Title = "Apellido Materno" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" onclick="test();" class="btn btn-danger"><i class="fa fa-save"></i> Guardar</button>
+        </div>*@
+}
+
+<script>
+    $(document).ready(function () {
+        $('#modal-Alert').modal('show');
+    });
+    random_bg_color();
+</script>

@@ -1,0 +1,114 @@
+﻿
+@model WebSaludOcupacional.Models.MantenimientoModel.MantenimientoOrdenCargaModel
+
+@{
+    ViewBag.Title = "ACL || MegaCentro || Mantenimiento de ordenes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" role="main">
+    @using (Html.BeginForm())
+    {
+        <h3 class="letra-marron"><i class="fa fa-gears"></i> Mantenimiento de ordenes</h3>
+        @Html.AntiForgeryToken()
+        <hr />
+        <div class="col-md-12 panel-body">
+            <table class="table table-hover" id="tbCarga">
+                <thead>
+                    <tr>
+                        <th class="contenido-rojo">N° Orden</th>
+                        <th class="contenido-rojo">N° Guía</th>
+                        <th class="contenido-rojo">Fecha Registro</th>
+                        <th class="contenido-rojo">Transportista</th>
+                        <th class="contenido-rojo">Estado</th>
+                        <th class="contenido-rojo"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model.lOrdenesPendientes)
+                    {
+                        <tr class="odd">
+                            <td class="letra-marron">@r.IdOrdenCarga</td>
+                            <td class="letra-marron">@r.NumeroGuia</td>
+                            <td class="letra-marron">@r.FechaFinalRegistro</td>
+                            <td class="letra-marron">@r.NombreTransportista</td>
+                            <td class="letra-marron">@r.EstadoDescripcion</td>
+                            <td class="letra-marron">
+                                <button type="button" class="btn btn-danger btn-xs custom-btn delete"
+                                        data-toggle="modal"
+                                        data-target="#ModalEli"
+                                        data-id="@r.IdOrdenCarga">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@using (Ajax.BeginForm("Ordenes", "Mantenimiento", FormMethod.Post,
+                                            new AjaxOptions()
+                                            {
+                                                UpdateTargetId = "ModalEli",
+                                                OnSuccess = "$('#modal-content').modal('hide');"
+                                            },
+                                            new { id = "myform", enctype = "multipart/form-data" }))
+{
+    <div class="modal fade" id="ModalEli" tabindex="-1" role="dialog" aria-labelledby="ModalEliTitulo">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header ccheadpanel">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title letra-marron" id="ModalEliTitulo">¿Seguro de eliminar la orden?</h4>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Cancelar
+                    </button>
+                    <button type="submit" id="btnEliminar" class="btn btn-danger contenido-rojo">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    if (typeof NProgress != 'undefined') {
+        NProgress.set(0.3)
+        $(document).ready(function () {
+            NProgress.done();
+        });
+    }
+
+    $(document).ready(function () {
+        $('#tbCarga').DataTable({
+            'paging': false
+        });
+    });
+
+    var id;
+    $('.delete').click(function (e) {
+        e.preventDefault();
+        id = $(this).data('id');
+    });
+
+    $('#btnEliminar').click(function () {
+        if (id != '') {
+            $.ajax({
+                url: '/Mantenimiento/Eliminar',
+                data: { 'id': id },
+                type: 'post',
+                success: function () {
+                    $('#ModalEli').modal('hide');
+                }
+            });
+        }
+    });
+
+</script>

@@ -1,0 +1,256 @@
+﻿
+@model WebSaludOcupacional.Models.TransportistaModel.OrdenCargaModel
+
+@{
+    ViewBag.Title = "ACL || MegaCentro || Coteo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+
+<div class="row" role="main">    
+@using (Html.BeginForm("Conteo", "Transportista", FormMethod.Post, new { @name = "frmConteo", @id = "frmConteo" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-xs-12 col-md-6">
+        <h4 class="letra-marron"><i class="fa fa-truck"></i> Transportista : @Model.NombreTransportista</h4>
+        <h5 class="letra-griss"><i class="fa fa-caret-right"></i> @TempData["Proceso"]</h5>
+    </div>
+    <div class="col-xs-12 col-md-6 text-right">
+        <div class="col-xs-6">
+            <h6 class="letra-marron"><i class="fa fa-calendar"></i> Fecha entra : @DateTime.ParseExact(Model.FechaEntrega, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).ToShortDateString() </h6>
+        </div>
+        <div class="col-xs-6">
+            <h6 class="letra-marron"><i class="fa fa-car"></i> Placa Vehículo : @Model.Vehiculo</h6>
+        </div>
+        <div class="col-xs-6">
+            <h6 class="letra-marron"><i class="fa fa-building-o"></i> Centro Guía : @Model.CentroGuia</h6>
+        </div>
+        <div class="col-xs-6">
+            <h6 class="letra-marron"><i class="fa fa-plane"></i> Viaje : @Model.Viaje</h6>
+        </div>
+    </div>
+    <div class="col-md-12" style="background-color:#d9012e"></div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="col-md-12 panel-body">
+        @if (ViewBag.Finalizar == null)
+        {
+            <table class="table table-hover" id="tbCarga">
+                <thead>
+                    <tr>
+                        <th class="contenido-rojo">ID</th>
+                        <th class="contenido-rojo">T.Mov.</th>
+                        <th class="contenido-rojo">Código</th>
+                        <th class="contenido-rojo">Material</th>
+                        <th class="contenido-rojo">CJ/PQ</th>
+                        <th class="contenido-rojo">Unidad</th>
+                        <th class="contenido-rojo">CJ/PQ</th>
+                        <th class="contenido-rojo">Unidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Items.Count; i++)
+                    {
+                        <tr class="odd gradeX">
+                            <th class="letra-marron">@Model.Items[i].IdRegistro @Html.HiddenFor(m => m.Items[i].Material)</th>
+                            <th class="letra-marron">@Model.Items[i].IdTipoMovimiento @Html.HiddenFor(m => m.Items[i].IdTipoMovimiento)</th>
+                            <th class="letra-marron">@Model.Items[i].Material @Html.HiddenFor(m => m.Items[i].CantValidar) @Html.HiddenFor(m => m.Items[i].NumeroSuu)</th>
+                            <th class="letra-marron">@Model.Items[i].Descripcion</th>
+                            <th class="letra-marron">@Convert.ToInt32(Model.Items[i].Unidad)</th>
+                            <th class="letra-marron">@Convert.ToInt32(Model.Items[i].SubUnidad)</th>
+                            <th class="letra-marron">
+                                @Html.TextBoxFor(m => m.Items[i].UnidadCambio, new { @class = "form-control", @style = "width:60px", @type = "text", @role = "textbox" })
+                                @Html.ValidationMessageFor(m => m.Items[i].UnidadCambio, "", new { @class = "text-danger" })
+                            </th>
+                            <th class="letra-marron">
+                                @Html.TextBoxFor(m => m.Items[i].SubUnidadCambio, new { @class = "form-control", @style = "width:60px", @type = "text", @role = "textbox" })
+                                @Html.ValidationMessageFor(m => m.Items[i].SubUnidadCambio, "", new { @class = "text-danger" })
+                            </th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="col-md-8 col-md-offset-2">
+                <h4 class="text-success"><i class="fa fa-check"></i> @ViewBag.Finalizar las devoluciones ingresadas estan listas para finalizar, presione el botón <i class="fa fa-save"></i> </h4>
+            </div>            
+        }
+    </div>
+    <div class="col-md-12" style="background-color:#d9012e"></div>
+    <div class="col-xs-12 col-md-12">
+        <div class="col-md-12"><br /></div>
+        <div class="col-xs-4 col-md-2 col-md-offset-10">
+            <div class="col-xs-6 col-md-6">
+                <button type="submit" value="Regresar" name="action:Regresar" class="btn btn-danger custom-btn btn-lg pull-right">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="col-xs-6 col-md-6">
+                @if (ViewBag.Finalizar != null)
+                {
+                    <button type="button" class="btn btn-danger custom-btn btn-lg pull-right" 
+                            data-toggle="modal" 
+                            data-target="#ModalEli" 
+                            >
+                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                    </button>
+                }
+                else
+                {
+                    <button type="submit" value="Avanzar" name="action:Avanzar" class="btn btn-danger custom-btn btn-lg pull-right"
+                            onclick="ValidarFilas();">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+
+}
+
+</div>
+
+@using (Ajax.BeginForm("Finalizar", "Transportista", FormMethod.Post,
+                new AjaxOptions()
+                {
+                    UpdateTargetId = "ModalEli",
+                    OnSuccess = "$('#modal-content').modal('hide');"
+                },
+                new { id = "myform", enctype = "multipart/form-data" }))
+{
+    <div class="modal fade" id="ModalEli" tabindex="-1" role="dialog" aria-labelledby="ModalEliTitulo">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header ccheadpanel">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title letra-marron" id="ModalEliTitulo">¿Seguro de finalizar el conteo?</h4>
+                </div>
+                <div class="modal-footer">
+                    
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-danger contenido-rojo">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Finalizar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="modal fade" id="ModalError" tabindex="-1" role="dialog" aria-labelledby="ModalErrorTitulo">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header ccheadpanel">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title text-danger" id="ModalErrorTitulo">Error encontrado :v</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-danger contenido-rojo" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Aceptar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    if (typeof NProgress != 'undefined') {
+        NProgress.set(0.3)
+        $(document).ready(function () {
+            NProgress.done();
+        });
+    }
+
+    var table = "";
+    $(document).ready(function () {
+
+        table = $('#tbCarga').DataTable({
+            'paging' : false
+        });
+            
+    });
+
+    // Handle form submission event
+    $('#frmConteo').on('submit', function(e){
+        var form = this;
+
+        // Encode a set of form elements from all pages as an array of names and values
+        var params = table.$('input,select,textarea').serializeArray();
+
+        // Iterate over all form elements
+        $.each(params, function(){
+            // If element doesn't exist in DOM
+            if(!$.contains(document, form[this.name])){
+                // Create a hidden element
+                $(form).append(
+                   $('<input>')
+                      .attr('type', 'hidden')
+                      .attr('name', this.name)
+                      .val(this.value)
+                );
+            }
+        });       
+
+    });
+    
+    // aquí asignamos el teclado a cada caja de texto de la tabla
+    var filas = @Model.Items.Count;
+    for (var i = 0; i < filas; i++) {
+        $('#Items_' + i + '__UnidadCambio').keyboard({
+            layout : 'num',
+            restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
+            preventPaste : true,  // prevent ctrl-v and right click
+            autoAccept : true
+        });
+
+        $('#Items_' + i + '__SubUnidadCambio').keyboard({
+            layout : 'num',
+            restrictInput : true, // Prevent keys not in the displayed keyboard from being typed in
+            preventPaste : true,  // prevent ctrl-v and right click
+            autoAccept : true
+        });
+    }
+
+    // validar las filas    
+    function ValidarFilas(e) {
+        var tbody = $("table tbody");
+        
+        tbody.find('tr').each(function (i) {
+            var $tds = $(this).find('th'),
+                CantValidar = $tds.eq(2)[0].children(0).value,
+                NumeroSuu = $tds.eq(2)[0].children(1).value,               
+                UnidadCambio = $tds.eq(6)[0].children(0).value,
+                SubUnidadCambio = $tds.eq(7)[0].children(0).value;
+            //Unidad = $tds.eq(4).text()
+            var totalcambio = parseInt(UnidadCambio) * parseInt(NumeroSuu) + parseInt(SubUnidadCambio);
+
+            if (totalcambio > CantValidar) {
+                //alert("El SKU " + $tds.eq(2).text() + " tiene una cantidad superior a la disponible de devolución");
+                
+                $('#ModalError').modal('show');
+                $('#ModalErrorTitulo')[0].textContent = "El SKU " + $tds.eq(2).text() + " tiene una cantidad superior a la disponible de devolución";
+                event.preventDefault();
+                return false;
+            }
+        });
+        return true;
+    }
+
+    // Finalizar el conteo
+    //$('#mySubmit').click(function () {
+    //    $.ajax({
+    //        url: '/Transportista/Finalizar',
+    //        type: 'post',
+    //        success: function () {
+    //            $("#ModalEli").modal("hide");
+                
+    //        }
+    //    });
+    //});
+
+</script>

@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 14.125, 14.5" name="BDSaludOcupacional">
+  <DataContextMoniker Name="/BDSaludOcupacionalDataContext" />
+  <nestedChildShapes>
+    <classShape Id="fdbe2ebe-4651-419a-81fa-a4ac05f28339" absoluteBounds="4, 3.125, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/UserType" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bc481ed1-30ec-467a-8db0-54dfe7fbf9a9" absoluteBounds="4.0150000000000006, 3.585, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2e3a5bb3-4284-4476-97d5-4c8fd4dd802f" absoluteBounds="6.625, 3.625, 2, 3.1170068359375">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/User" />
+      <nestedChildShapes>
+        <elementListCompartment Id="981de242-75e4-4696-9d22-608ea87d3cbf" absoluteBounds="6.64, 4.085, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6 : 3.97199625651042); (6.625 : 3.97199625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/BDSaludOcupacionalDataContext/UserType/UserType_User" />
+      <nodes>
+        <classShapeMoniker Id="fdbe2ebe-4651-419a-81fa-a4ac05f28339" />
+        <classShapeMoniker Id="2e3a5bb3-4284-4476-97d5-4c8fd4dd802f" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="8087f433-f73a-4354-8e01-8beb30c30eee" absoluteBounds="6.75, 1, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/Doctor" />
+      <nestedChildShapes>
+        <elementListCompartment Id="45a062e1-2f04-424e-933a-848b496e7751" absoluteBounds="6.765, 1.46, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(7.6875 : 3.625); (7.6875 : 3.15549967447917)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/BDSaludOcupacionalDataContext/User/User_Doctor" />
+      <nodes>
+        <classShapeMoniker Id="2e3a5bb3-4284-4476-97d5-4c8fd4dd802f" />
+        <classShapeMoniker Id="8087f433-f73a-4354-8e01-8beb30c30eee" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="1ed03383-b81b-42d3-94b5-6aa41a84fca1" absoluteBounds="0.625, 0.5, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/Company" />
+      <nestedChildShapes>
+        <elementListCompartment Id="efe2b329-695d-4c16-b09f-d9fb548a1708" absoluteBounds="0.63999999999999968, 0.96, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.625 : 2.79409912109375); (6.41666666666667 : 2.79409912109375 : JumpStart); (6.58333333333333 : 2.79409912109375 : JumpEnd); (6.75 : 2.79409912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/BDSaludOcupacionalDataContext/Company/Company_Doctor" />
+      <nodes>
+        <classShapeMoniker Id="1ed03383-b81b-42d3-94b5-6aa41a84fca1" />
+        <classShapeMoniker Id="8087f433-f73a-4354-8e01-8beb30c30eee" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="c52910a6-1e8e-4535-ad55-6e2fa35793c5" absoluteBounds="3.75, 0.5, 2, 1.9631982421875">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/Menu" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e0097838-ca33-4dcb-99a8-e711d4dfc47b" absoluteBounds="3.7649999999999997, 0.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0e8f4442-53e7-4ac8-ac0d-711b2009e0c6" absoluteBounds="1.75, 3.75, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/Employee" />
+      <nestedChildShapes>
+        <elementListCompartment Id="326c3480-427b-4d61-8dd8-bfa9c31aa486" absoluteBounds="1.7650000000000001, 4.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b637c962-d1b0-4082-88e7-e664e688b74e" absoluteBounds="4, 7.75, 2, 1.3862939453125">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/RiskFactor" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7b350bbc-9ebc-4b07-9cd9-df5c183dbd1d" absoluteBounds="4.0150000000000006, 8.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4 : 8.9175439453125); (3.15625 : 8.9175439453125); (3.15625 : 6.67470540364583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/BDSaludOcupacionalDataContext/RiskFactor/RiskFactor_Employee" />
+      <nodes>
+        <classShapeMoniker Id="b637c962-d1b0-4082-88e7-e664e688b74e" />
+        <classShapeMoniker Id="0e8f4442-53e7-4ac8-ac0d-711b2009e0c6" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="5d9bdf04-7078-4dda-b365-ec0af10eaadb" absoluteBounds="4, 4.5, 2, 1.3862939453125">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/OccupationType" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6b5970b8-3396-4d0f-a404-21bc1d886797" absoluteBounds="4.015, 4.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4 : 5.2925439453125); (3.75 : 5.2925439453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/BDSaludOcupacionalDataContext/OccupationType/OccupationType_Employee" />
+      <nodes>
+        <classShapeMoniker Id="5d9bdf04-7078-4dda-b365-ec0af10eaadb" />
+        <classShapeMoniker Id="0e8f4442-53e7-4ac8-ac0d-711b2009e0c6" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="7f666b11-3b7c-4c80-a3fc-b53e380abbd7" absoluteBounds="0.5, 7.25, 2, 1.3862939453125">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/Schedule" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a8168c5e-0bda-4e48-a97c-d7fca802343b" absoluteBounds="0.51500000000000012, 7.7100000000000009, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.125 : 7.25); (2.125 : 6.67470540364583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/BDSaludOcupacionalDataContext/Schedule/Schedule_Employee" />
+      <nodes>
+        <classShapeMoniker Id="7f666b11-3b7c-4c80-a3fc-b53e380abbd7" />
+        <classShapeMoniker Id="0e8f4442-53e7-4ac8-ac0d-711b2009e0c6" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="8c763fd8-c1dc-475e-bdd1-b2ff7a2659c9" absoluteBounds="4, 6.125, 2, 1.3862939453125">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/WorkCondition" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4595df6f-20c5-40f1-8132-a524ace159d6" absoluteBounds="4.015, 6.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(4 : 6.39985270182292); (3.75 : 6.39985270182292)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/BDSaludOcupacionalDataContext/WorkCondition/WorkCondition_Employee" />
+      <nodes>
+        <classShapeMoniker Id="8c763fd8-c1dc-475e-bdd1-b2ff7a2659c9" />
+        <classShapeMoniker Id="0e8f4442-53e7-4ac8-ac0d-711b2009e0c6" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="75ecf926-4b70-4361-a442-9ad62f8a192b" absoluteBounds="6.625, 7, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/Respirator" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a4e17d1c-644e-4ad9-838c-6a40857382a3" absoluteBounds="6.64, 7.46, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8f9c7fcd-6a68-4a70-bda8-2d6f82ce55a7" absoluteBounds="9.375, 0.625, 2, 3.1170068359375">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/Activity" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bac2ca20-9b86-4936-803f-3720b65783e6" absoluteBounds="9.39, 1.085, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.625 : 1.61579756054688); (3.5 : 1.61579756054688); (3.5 : 2.5881982421875); (6.5 : 2.5881982421875); (6.5 : 3.40549967447917); (7.60416666666667 : 3.40549967447917 : JumpStart); (7.77083333333333 : 3.40549967447917 : JumpEnd); (8.88541666666667 : 3.40549967447917 : JumpStart); (9.05208333333333 : 3.40549967447917 : JumpEnd); (9.125 : 3.40549967447917); (9.125 : 3.9920068359375); (9.38541716666666 : 3.9920068359375 : JumpStart); (9.55208383333333 : 3.9920068359375 : JumpEnd); (10.375 : 3.9920068359375); (10.375 : 3.7420068359375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/BDSaludOcupacionalDataContext/Company/Company_Activity" />
+      <nodes>
+        <classShapeMoniker Id="1ed03383-b81b-42d3-94b5-6aa41a84fca1" />
+        <classShapeMoniker Id="8f9c7fcd-6a68-4a70-bda8-2d6f82ce55a7" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.625 : 7.970400390625); (8.88541666666667 : 7.970400390625 : JumpStart); (9.05208333333333 : 7.970400390625 : JumpEnd); (9.4687505 : 7.970400390625); (9.4687505 : 3.7420068359375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/BDSaludOcupacionalDataContext/Respirator/Respirator_Activity" />
+      <nodes>
+        <classShapeMoniker Id="75ecf926-4b70-4361-a442-9ad62f8a192b" />
+        <classShapeMoniker Id="8f9c7fcd-6a68-4a70-bda8-2d6f82ce55a7" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="5846d8af-8022-4d35-aa5c-4a1971de906f" absoluteBounds="11.875, 0.875, 2, 1.3862939453125">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/Filter" />
+      <nestedChildShapes>
+        <elementListCompartment Id="29dcb1ab-f0d2-4578-bb94-a5a4895a1a39" absoluteBounds="11.89, 1.335, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(11.875 : 1.56814697265625); (11.375 : 1.56814697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/BDSaludOcupacionalDataContext/Filter/Filter_Activity" />
+      <nodes>
+        <classShapeMoniker Id="5846d8af-8022-4d35-aa5c-4a1971de906f" />
+        <classShapeMoniker Id="8f9c7fcd-6a68-4a70-bda8-2d6f82ce55a7" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="f561f4c4-aae8-4f35-aaec-a3a208fe4fa4" absoluteBounds="9.625, 4.375, 2, 2.9247054036458331">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/Contract" />
+      <nestedChildShapes>
+        <elementListCompartment Id="078e982f-ccfc-46bf-b825-550b8f50e4b0" absoluteBounds="9.64, 4.835, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(10.9375 : 4.375); (10.9375 : 3.7420068359375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/BDSaludOcupacionalDataContext/Contract/Contract_Activity" />
+      <nodes>
+        <classShapeMoniker Id="f561f4c4-aae8-4f35-aaec-a3a208fe4fa4" />
+        <classShapeMoniker Id="8f9c7fcd-6a68-4a70-bda8-2d6f82ce55a7" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.625 : 5.55850341796875); (8.88541666666667 : 5.55850341796875 : JumpStart); (9.05208333333333 : 5.55850341796875 : JumpEnd); (9.38541716666666 : 5.55850341796875 : JumpStart); (9.55208383333333 : 5.55850341796875 : JumpEnd); (9.625 : 5.55850341796875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/BDSaludOcupacionalDataContext/User/User_Contract" />
+      <nodes>
+        <classShapeMoniker Id="2e3a5bb3-4284-4476-97d5-4c8fd4dd802f" />
+        <classShapeMoniker Id="f561f4c4-aae8-4f35-aaec-a3a208fe4fa4" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="08f28237-5ede-4781-9049-e98ce2092419" absoluteBounds="8.375, 9.75, 2, 4.4631168619791666">
+      <DataClassMoniker Name="/BDSaludOcupacionalDataContext/IndicatorSingle" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e759fa17-91ce-441e-8d68-90b92ed6f157" absoluteBounds="8.39, 10.21, 1.9700000000000002, 3.903116861979167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(9.375 : 0.78125); (8.96875 : 0.78125); (8.96875 : 9.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/BDSaludOcupacionalDataContext/Activity/Activity_IndicatorSingle" />
+      <nodes>
+        <classShapeMoniker Id="8f9c7fcd-6a68-4a70-bda8-2d6f82ce55a7" />
+        <classShapeMoniker Id="08f28237-5ede-4781-9049-e98ce2092419" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

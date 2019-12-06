@@ -1,0 +1,103 @@
+﻿
+@using Salud.Ocupacional.BE;
+@model EmpresaBE.ResponseEmpresaBE
+
+@using (Ajax.BeginForm("DatosEmpresa", "Empresa"
+    , new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "frmEmpresaM" }
+    , new { id = "frmEmpresaM", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-modificar">
+        <div class="col-md-11">
+            <div class="modal-title letra-acl Alert-Head" id="myModalLabel">
+                <i class="mdi Alert-Head mdi-bulletin-board"></i> Editar empresa
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close Alert-Head" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-relative-scale" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.RUC, new { value = "", autocomplete = "new-password", @placeholder = "RUC", @class = "form-control", @id = "txtRUC", @Title = "RUC", maxlength = "11", onkeypress = "return soloNumeros(event);" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-city" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Name, new { value = "", autocomplete = "new-password", @placeholder = "Razón Social", @class = "form-control", @id = "txtName", @Title = "Name" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-contacts" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Tradename, new { @placeholder = "Nombre comercial", @autocapitalize = "off", @class = "form-control", @id = "txtContactname", @Title = "Contacto Nombre" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-home-map-marker" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Address, "", new { value = "", autocomplete = "Dirección", @placeholder = "Dirección", @class = "form-control", @id = "txtDirección" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-cellphone-iphone" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Cellphone, new { @placeholder = "Celular Numero", @autocapitalize = "off", @class = "form-control", @id = "txtCellphone", @Title = "Celular Numero" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-email" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Email, new { @placeholder = "Email", @autocapitalize = "off", @class = "form-control", @id = "txtEmail", @Title = "Email" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-contact-mail" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Contactname, new { @placeholder = "Nombre contacto", @autocapitalize = "off", @class = "form-control", @id = "txtTradename", @Title = "Contacto Alterno" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-star-variant" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.ContactLastname, new { @placeholder = "Apellido Paterno", @autocapitalize = "off", @class = "form-control", @id = "txtContactLastname", @Title = "Apellido Paterno" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-star" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.ContactLastname2, new { @placeholder = "Apellido Materno", @autocapitalize = "off", @class = "form-control", @id = "txtContactLastname2", @Title = "Apellido Materno" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" onclick="ValidaInputs('frmEmpresaM');" class="btn btn-danger"><i class="fa fa-save"></i> Guardar</button>
+    </div>
+    @Html.TextBoxFor(m => m.IDCompany, new { value = @Model.IDCompany, @class = "HiddenFor" })
+    @Html.TextBoxFor(m => m.Activo, "true", new { value = "true", @class = "HiddenFor" })
+}

@@ -1,0 +1,440 @@
+﻿@model WebSaludOcupacional.Models.MantenimientoModel.MantenimientoActividadModel
+
+@{
+    ViewBag.Title = "Sealcheckchip - " + Model.Usuario.perfilList.FirstOrDefault(x => x.IdPerfil.Equals(Model.Usuario.Type)).Nombre;
+    ViewBag.TextList = "Listado Maestro Actividades";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.classModal = null;
+}
+<div class="col-lg-12" role="main">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-block bg-info">
+                    <h4 class="text-white card-title"><i class="fa fa-gears"></i> Mantenimiento de Actividades</h4>
+                </div>
+                <div class="card-block">
+                    <div class="message-box contact-box">
+                        @if (Model.Usuario.Type.Equals(3))
+                        {
+                            <h2 class="add-ct-btn">
+                                <button type="button" class="btn btn-circle btn-lg btn-success waves-effect waves-dark" id="regNuevo" name="regNuevo"
+                                        data-targeturl="@Url.Action("RegistrarActividad", "Actividad")">
+                                    +
+                                </button>
+                            </h2>
+                        }
+                        <table class="table table-hover" id="tbUsurios">
+                            <thead>
+                                <tr>
+                                    <th style="width:5%">ID</th>
+                                    <th style="width:10%">Empresa</th>
+                                    <th>Description</th>
+                                    <th style="width:8%">Contrato</th>
+                                    <th style="width:8%">Modelo</th>
+                                    <th style="width:8%">Filtro</th>
+                                    <th style="width:15%">Supervisor</th>
+                                    @if (Model.Usuario.Type.Equals(3))
+                                    {
+                                        <th style="width:7.5%"></th>
+                                    }
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var r in Model.lActividad)
+                                {
+                                    <tr class="odd" id="RowsCont">
+                                        <td class="letra-marron">@r.IDactivity</td>
+                                        <td class="letra-marron">@r.lCompany.FirstOrDefault(x => x.IDCompany.Equals(r.IDCompany)).Name</td>
+                                        <td class="letra-marron">@r.Description</td>
+                                        <td class="letra-marron">@r.lContract.FirstOrDefault(x => x.IDContract.Equals(r.Contract)).DraegerUser</td>
+                                        <td class="letra-marron">@r.lRespirator.FirstOrDefault(x => x.ID.Equals(r.Respirator)).Model</td>
+                                        <td class="letra-marron">@r.lFilter.FirstOrDefault(x => x.IDFilter.Equals(r.Filter)).Filter</td>
+                                        <td class="letra-marron">@r.Supervisor</td>
+                                        @if (Model.Usuario.Type.Equals(3))
+                                        {
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-xs custom-btn details"
+                                                        data-target="@Url.Action("DatosActividad", "Actividad" , new { id=r.IDactivity})"
+                                                        data-targeturl="@Url.Action("DatosActividad", "Actividad" , new { id=r.IDactivity})">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-xs custom-btn delete"
+                                                        data-target="@Url.Action("DeleteActividad", "Actividad" , new { id=r.IDactivity})"
+                                                        data-targeturl="@Url.Action("DeleteActividad", "Actividad" , new { id=r.IDactivity})">
+                                                    <i class="fa fa-remove"></i>
+                                                </button>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        if (@ViewBag.Message != null)
+        {
+            <script>
+                setTimeout('ModalOcultoAutomatico()', 3000);
+            </script>
+            if (ViewBag.Message.Estado != 0)
+            {
+                ViewBag.classModal = "modal-Alert-Error";
+            }
+            else
+            {
+                ViewBag.classModal = "modal-Alert-Ok";
+            }
+            <div id="modal-Alert" class="modal fade" tabindex="-1" role="dialog" style="overflow-y:auto;">
+                <div class="modal-dialog " role="document">
+                    <div class="modal-content" id="modalbody">
+                        <div class="@ViewBag.classModal">
+                            <div class="col-md-11">
+                                <div class="modal-title letra-acl Alert-Head" id="myModalLabel">
+                                    <i class="mdi Alert-Head mdi-account-check"></i> @ViewBag.Message.Title
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="close Alert-Head" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            @ViewBag.Message.Message
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+
+</div>
+
+@Scripts.Render("~/Scripts/js/Master")
+<!-- Modal -->
+<div id="modal-registro" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y:auto;">
+
+</div>
+
+<div id="modal-container" class="modal fade" tabindex="-1" role="dialog" style="overflow-y:auto;">
+
+</div>
+
+<div id="modal-Confirm-Alert" class="modal fade" tabindex="-1" role="dialog" style="overflow-y:auto;">
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#modal-Alert').modal('show');
+    });
+
+    function soloNumeros(e) {
+        var key = window.Event ? e.which : e.keyCode
+        return (key >= 48 && key <= 57)
+    }
+
+    $("#regNuevo").on('click', function (e) {
+        showPreloader();
+        $.get($(this).data("targeturl"), function (data) {
+            $('<div id="modal-container" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="overflow-y:auto;" >' +
+                '<div class="modal-dialog " role="document">' +
+                '<div class="modal-content" id= "modalbody" >' +
+                data + '</div></div>').modal('show');
+            hidePreloader();
+            $("#txtClave").attr("type", "password");
+            $("#datepicker").on('focus', function (e) {
+                $("#modal-container #datepicker").bootstrapMaterialDatePicker({ weekStart: 0, time: false });
+                $('#datepicker').bootstrapMaterialDatePicker({ weekStart: 0, time: false });
+            });
+        });
+    });
+
+    $(".delete").on('click', function (e) {
+        showPreloader();
+        console.log('click');
+        e.preventDefault();
+        $("#modal-Confirm-Alert").remove();
+        $.get($(this).data("target"), function (data) {
+            $('<div id="modal-Confirm-Alert" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="overflow-y:auto;" >' +
+                '<div class="modal-dialog " role="document">' +
+                '<div class="modal-content" id= "modalbody" >' +
+                data + '</div></div>').modal('show');
+            hidePreloader();
+        });
+    });
+
+    $(".details").on('click', function (e) {
+        showPreloader();
+        console.log('click');
+        e.preventDefault();
+        $("#modal-container").remove();
+        $.get($(this).data("target"), function (data) {
+            $('<div id="modal-container" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="overflow-y:auto;" >' +
+                '<div class="modal-dialog " role="document">' +
+                '<div class="modal-content" id= "modalbody" >' +
+                data + '</div></div>').modal('show');
+            hidePreloader();
+        });
+    });
+
+    $(document).ready(function () {
+        $('#modal-Alert').modal('show');
+        table = $('#tbUsurios').DataTable({
+            'paging': false
+        });
+    });
+
+    function ValidaFecha() {
+        $("#modal-container #datepicker").bootstrapMaterialDatePicker({
+            format: 'YYYY-MM-DD ', time: false });
+        $('#datepicker').bootstrapMaterialDatePicker({ format: 'YYYY-MM-DD ', time: false });
+    }
+
+    function ValidaHoraIni() {
+        // Clock pickers
+        $('.clockpicker').clockpicker({
+            donetext: 'Done',
+        }).find('input').change(function () {
+            console.log(this.value);
+        });
+    }
+
+    function ValidaHoraFin() {
+        // Clock pickers
+        $('.clockpicker').clockpicker({
+            donetext: 'Done',
+        }).find('input').change(function () {
+            console.log(this.value);
+        });
+    }
+</script>
+
+<script>
+    /*******************************************/
+    // Basic Date Range Picker
+    /*******************************************/
+    $('.daterange').daterangepicker();
+
+    /*******************************************/
+    // Date & Time
+    /*******************************************/
+    $('.datetime').daterangepicker({
+        timePicker: true,
+        timePickerIncrement: 30,
+        locale: {
+            format: 'MM/DD/YYYY h:mm A'
+        }
+    });
+
+    /*******************************************/
+    //Calendars are not linked
+    /*******************************************/
+    $('.timeseconds').daterangepicker({
+        timePicker: true,
+        timePickerIncrement: 30,
+        timePicker24Hour: true,
+        timePickerSeconds: true,
+        locale: {
+            format: 'MM-DD-YYYY h:mm:ss'
+        }
+    });
+
+    /*******************************************/
+    // Single Date Range Picker
+    /*******************************************/
+    $('.singledate').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true
+    });
+
+    /*******************************************/
+    // Auto Apply Date Range
+    /*******************************************/
+    $('.autoapply').daterangepicker({
+        autoApply: true,
+    });
+
+    /*******************************************/
+    // Calendars are not linked
+    /*******************************************/
+    $('.linkedCalendars').daterangepicker({
+        linkedCalendars: false,
+    });
+
+    /*******************************************/
+    // Date Limit
+    /*******************************************/
+    $('.dateLimit').daterangepicker({
+        dateLimit: {
+            days: 7
+        },
+    });
+
+    /*******************************************/
+    // Show Dropdowns
+    /*******************************************/
+    $('.showdropdowns').daterangepicker({
+        showDropdowns: true,
+    });
+
+    /*******************************************/
+    // Show Week Numbers
+    /*******************************************/
+    $('.showweeknumbers').daterangepicker({
+        showWeekNumbers: true,
+    });
+
+    /*******************************************/
+    // Date Ranges
+    /*******************************************/
+    $('.dateranges').daterangepicker({
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    });
+
+    /*******************************************/
+    // Always Show Calendar on Ranges
+    /*******************************************/
+    $('.shawCalRanges').daterangepicker({
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        alwaysShowCalendars: true,
+    });
+
+    /*******************************************/
+    // Top of the form-control open alignment
+    /*******************************************/
+    $('.drops').daterangepicker({
+        drops: "up" // up/down
+    });
+
+    /*******************************************/
+    // Custom button options
+    /*******************************************/
+    $('.buttonClass').daterangepicker({
+        drops: "up",
+        buttonClasses: "btn",
+        applyClass: "btn-info",
+        cancelClass: "btn-danger"
+    });
+
+    /*******************************************/
+    // Language
+    /*******************************************/
+    $('.localeRange').daterangepicker({
+        ranges: {
+            "Aujourd'hui": [moment(), moment()],
+            'Hier': [moment().subtract('days', 1), moment().subtract('days', 1)],
+            'Les 7 derniers jours': [moment().subtract('days', 6), moment()],
+            'Les 30 derniers jours': [moment().subtract('days', 29), moment()],
+            'Ce mois-ci': [moment().startOf('month'), moment().endOf('month')],
+            'le mois dernier': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+        },
+        locale: {
+            applyLabel: "Vers l'avant",
+            cancelLabel: 'Annulation',
+            startLabel: 'Date initiale',
+            endLabel: 'Date limite',
+            customRangeLabel: 'SÃ©lectionner une date',
+            // daysOfWeek: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi','Samedi'],
+            daysOfWeek: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+            monthNames: ['Janvier', 'fÃ©vrier', 'Mars', 'Avril', 'ÐœÐ°i', 'Juin', 'Juillet', 'AoÃ»t', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
+            firstDay: 1
+        }
+    });
+</script>
+<script>
+    // MAterial Date picker
+    $('#mdate').bootstrapMaterialDatePicker({ weekStart: 0, time: false });
+    $('#timepicker').bootstrapMaterialDatePicker({ format: 'HH:mm', time: true, date: false });
+    $('#date-format').bootstrapMaterialDatePicker({ format: 'dddd DD MMMM YYYY - HH:mm' });
+
+    $('#min-date').bootstrapMaterialDatePicker({ format: 'DD/MM/YYYY HH:mm', minDate: new Date() });
+    // Clock pickers
+    $('#single-input').clockpicker({
+        placement: 'bottom',
+        align: 'left',
+        autoclose: true,
+        'default': 'now'
+    });
+    $('.clockpicker').clockpicker({
+        donetext: 'Done',
+    }).find('input').change(function () {
+        console.log(this.value);
+    });
+    $('#check-minutes').click(function (e) {
+        // Have to stop propagation here
+        e.stopPropagation();
+        input.clockpicker('show').clockpicker('toggleView', 'minutes');
+    });
+    if (/mobile/i.test(navigator.userAgent)) {
+        $('input').prop('readOnly', true);
+    }
+    // Colorpicker
+    $(".colorpicker").asColorPicker();
+    $(".complex-colorpicker").asColorPicker({
+        mode: 'complex'
+    });
+    $(".gradient-colorpicker").asColorPicker({
+        mode: 'gradient'
+    });
+    // Date Picker
+    jQuery('.mydatepicker, #datepicker').datepicker();
+    jQuery('#datepicker-autoclose').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+    jQuery('#date-range').datepicker({
+        toggleActive: true
+    });
+    jQuery('#datepicker-inline').datepicker({
+        todayHighlight: true
+    });
+    // Daterange picker
+    $('.input-daterange-datepicker').daterangepicker({
+        buttonClasses: ['btn', 'btn-sm'],
+        applyClass: 'btn-danger',
+        cancelClass: 'btn-inverse'
+    });
+    $('.input-daterange-timepicker').daterangepicker({
+        timePicker: true,
+        format: 'MM/DD/YYYY h:mm A',
+        timePickerIncrement: 30,
+        timePicker12Hour: true,
+        timePickerSeconds: false,
+        buttonClasses: ['btn', 'btn-sm'],
+        applyClass: 'btn-danger',
+        cancelClass: 'btn-inverse'
+    });
+    $('.input-limit-datepicker').daterangepicker({
+        format: 'MM/DD/YYYY',
+        minDate: '06/01/2015',
+        maxDate: '06/30/2015',
+        buttonClasses: ['btn', 'btn-sm'],
+        applyClass: 'btn-danger',
+        cancelClass: 'btn-inverse',
+        dateLimit: {
+            days: 6
+        }
+    });
+</script>

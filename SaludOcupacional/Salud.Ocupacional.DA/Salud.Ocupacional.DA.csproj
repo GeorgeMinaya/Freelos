@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{68F38A3C-A134-4C8F-B77F-59C7124B60B2}</ProjectGuid>
+    <ProjectTypeGuids>{32f31d43-81cc-4c15-9de6-3fc5453562b6};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Salud.Ocupacional.DA</RootNamespace>
+    <AssemblyName>Salud.Ocupacional.DA</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activities" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interfaces\IActividadDA.cs" />
+    <Compile Include="Interfaces\IArchivoDA.cs" />
+    <Compile Include="Interfaces\IMarcaModeloDA.cs" />
+    <Compile Include="Interfaces\ICondicionDA.cs" />
+    <Compile Include="Interfaces\IGuardiaDA.cs" />
+    <Compile Include="Interfaces\IOcupacionDA.cs" />
+    <Compile Include="Interfaces\IFactorRiesgoDA.cs" />
+    <Compile Include="Interfaces\IContratoDA.cs" />
+    <Compile Include="Interfaces\ITrabajadorDA.cs" />
+    <Compile Include="Interfaces\IMenuDA.cs" />
+    <Compile Include="Interfaces\IEmpresaDA.cs" />
+    <Compile Include="Interfaces\IPerfilDA.cs" />
+    <Compile Include="Interfaces\IDoctorDA.cs" />
+    <Compile Include="Interfaces\IUsuarioDA.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SourceCodes\ActividadDA.cs" />
+    <Compile Include="SourceCodes\ArchivoDA.cs" />
+    <Compile Include="SourceCodes\MarcaModeloDA.cs" />
+    <Compile Include="SourceCodes\CondicionDA.cs" />
+    <Compile Include="SourceCodes\GuardiaDA.cs" />
+    <Compile Include="SourceCodes\OcupacionDA.cs" />
+    <Compile Include="SourceCodes\FactorRiesgoDA.cs" />
+    <Compile Include="SourceCodes\ContratoDA.cs" />
+    <Compile Include="SourceCodes\TrabajadorDA.cs" />
+    <Compile Include="SourceCodes\MenuDA.cs" />
+    <Compile Include="SourceCodes\EmpresaDA.cs" />
+    <Compile Include="SourceCodes\PerfilDA.cs" />
+    <Compile Include="SourceCodes\DoctorDA.cs" />
+    <Compile Include="SourceCodes\UsuarioDA.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Salud.Ocupacional.BE\Salud.Ocupacional.BE.csproj">
+      <Project>{c4c0fdbd-c91e-4fb3-bf7e-b9e51dc8311a}</Project>
+      <Name>Salud.Ocupacional.BE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Salud.Ocupacional.DM\Salud.Ocupacional.DM.csproj">
+      <Project>{d8ab0edd-33ae-4d08-bb06-8064722982c3}</Project>
+      <Name>Salud.Ocupacional.DM</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

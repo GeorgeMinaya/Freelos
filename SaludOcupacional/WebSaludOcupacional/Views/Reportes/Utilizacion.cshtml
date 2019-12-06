@@ -1,0 +1,135 @@
+﻿
+@model WebSaludOcupacional.Models.ReportesModel.Utilizacion
+
+@{
+    ViewBag.Title = "Reporte de Utilización";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+@Styles.Render("~/Content/DateRangePickerCss")
+@Scripts.Render("~/Script/DateRangePickerJs")
+
+<div class="row" role="main">
+    @using (Html.BeginForm("Utilizacion", "Reportes", FormMethod.Post, new { @name = "frmLiquidacion", @id = "frmLiquidacion" }))
+    {
+        @Html.AntiForgeryToken()
+        
+        <h3 class="letra-marron"><i class="fa fa-area-chart"></i> Reporte de devolución de cajas físicas</h3>
+        <hr />
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label for="ddlCentros" class="col-xs-2 col-md-1 control-label letra-marron">Centro : </label>
+                <div class="col-xs-4 col-md-2">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></span>
+                        @Html.DropDownListFor(m => m.IdCentro, new SelectList(Model.Centros, "IdCentro", "Nombre"), new { @class = "form-control" })
+                    </div>
+                </div>
+                <label class="control-label col-xs-2 col-md-2 letra-marron" for="dpFecha">Rango de fechas : </label>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="glyphicon glyphicon-calendar"></span></span>
+                        @Html.TextBoxFor(x => x.FchRangos, new { @class = "form-control", @id = "dpFecha" })
+                    </div>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <button class="btn btn-danger custom-btn" type="submit"><i class="fa fa-search"></i> Buscar</button>
+                </div>
+                <div class="col-xs-2 col-md-2">
+                    <button class="btn btn-danger custom-btn" type="button" id="btnExcel"><i class="fa fa-file-excel-o"></i> Exportar&nbsp;</button>
+                </div>
+            </div>
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col-md-12">
+            <table class="table table-hover" id="tbBusqueda">
+                <thead>
+                    <tr>
+                        <th class="contenido-rojo">Cen<br />tro</th>
+                        <th class="contenido-rojo">Nro. Guía</th>
+                        <th class="contenido-rojo">Fecha Entrega</th>                        
+                        <th class="contenido-rojo">Placa</th>                        
+                        <th class="contenido-rojo">Transportista</th>
+                        <th class="contenido-rojo">Inspector</th>
+                        <th class="contenido-rojo">SKU</th>
+                        <th class="contenido-rojo">Producto</th>
+                        <th class="contenido-rojo">Tipo</th>
+                        <th class="contenido-rojo">Mov.</th>
+                        <th class="contenido-rojo">UN<br />TR</th>
+                        <th class="contenido-rojo">SU<br />TR</th>
+                        <th class="contenido-rojo">UN<br />IN</th>
+                        <th class="contenido-rojo">SU<br />IN</th>
+                        <th class="contenido-rojo">DIF</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model.Busqueda)
+                    {
+                        <tr class="odd">
+                            <td class="letra-marron">@r.CodigoCentro</td>
+                            <td class="letra-marron">@r.NumeroGuia</td>
+                            <td class="letra-marron">@DateTime.ParseExact(r.FechaEntrega, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).ToString("dd/MM/yyyy") </td>                            
+                            <td class="letra-marron">@r.PlacaVehiculo</td>
+                            <td class="letra-marron">@r.Transportista</td>
+                            <td class="letra-marron">@r.Inspector</td>
+                            <td class="letra-marron">@r.SKU</td>
+                            <td class="letra-marron">@r.Producto</td>
+                            <td class="letra-marron">@r.TipoProducto</td>
+                            <td class="letra-marron">@r.TipoMovimiento</td>
+                            <td class="letra-marron">@r.UnidadTransporte</td>
+                            <td class="letra-marron">@r.SubUnidadTransporte</td>
+                            <td class="letra-marron">@r.UnidadInspector</td>
+                            <td class="letra-marron">@r.SubUnidadInspector</td>
+                            <td class="letra-marron">@Html.CheckBox("AllowRating", r.Diferencia)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    if (typeof NProgress != 'undefined') {
+        NProgress.set(0.3)
+        $(document).ready(function () {
+            NProgress.done();
+        });
+    }
+
+    var table = '';
+    $(document).ready(function () {
+        $('#dpFecha').daterangepicker({
+            "autoApply": true,
+            locale: 'es'
+        });
+
+        table = $('#tbBusqueda').DataTable({
+            'paging': false
+        });
+
+        $('#btnExcel').click(function () {
+            var fecha = $('#dpFecha').val().split(' - ');
+            var fechaInicio = '' + fecha[0].split('/')[0] + '-' + fecha[0].split('/')[1] + '-' + fecha[0].split('/')[2]; // dd-MM-yyyy
+            var fechaFinal = '' + fecha[1].split('/')[0] + '-' + fecha[1].split('/')[1] + '-' + fecha[1].split('/')[2]; // dd-MM-yyyy
+
+            var url = "http://JRINCIDENCIASP.jrdomain.incakola.com.pe/MegaCentroAPI/api/OrdenCarga/ReporteUtilizacionExcel/" +
+                + @Model.IdCentro + "/" + fechaInicio + "/" + fechaFinal
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                contentType: 'application/vnd.ms-excel',
+                dataType: 'text',
+                success: function () {
+                    window.location = url;
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    window.location = url;
+                }
+            });
+        });
+    });
+
+</script>   

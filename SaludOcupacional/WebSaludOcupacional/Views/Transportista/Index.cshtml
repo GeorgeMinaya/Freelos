@@ -1,0 +1,46 @@
+﻿
+@model WebSaludOcupacional.Models.TransportistaModel.InicioModel
+
+@{
+    ViewBag.Title = "ACL || MegaCentro || Ingresar guía";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+
+<div class="row">
+    <h2 class="letra-marron"><i class="fa fa-file-text-o"></i> Ingrese la guía</h2>
+    <hr />
+    <div class="col-md-4 col-md-offset-4" role="main" style="vertical-align: central">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon contenido-rojo"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span></span>
+                    @Html.TextBoxFor(m => m.NumeroGuia, new { @placeholder = "Número de guía", @autocapitalize = "off", @class = "form-control", @maxlength = "16" })
+                    <span class="input-group-btn">
+                        <button name="btnAgrega" class="btn btn-danger custom-btn" type="submit">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            Buscar
+                        </button>
+                    </span>
+                </div>
+                @Html.ValidationMessageFor(m => m.NumeroGuia, "", new { @class = "text-danger" })
+            </div>
+        }
+    </div>        
+</div>
+
+<script type="text/javascript">
+    if (typeof NProgress != 'undefined') {
+        NProgress.set(0.3)
+        $(document).ready(function () {
+            NProgress.done();
+        });
+    }
+</script>
+
+
+

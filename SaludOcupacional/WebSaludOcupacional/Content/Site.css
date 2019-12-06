@@ -1,0 +1,304 @@
+﻿body {
+	padding-top: 5px;
+	padding-bottom: 30px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+	white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+    max-width: 280px;
+}*/
+#login-form {
+	margin: 10% auto;
+	width: 600px;
+}
+
+
+
+.custom-btn {
+	/*margin-top: 5%;*/
+	width: 100%;
+	background-color: #d9012e;
+	color: white;
+}
+
+	.custom-btn:hover {
+		/*margin-top: 5%;*/
+		width: 100%;
+		background-color: #ae7d6f;
+		color: white;
+	}
+
+	child.custom-btn:hover {
+		background-color: #ae7d6f;
+		color: white;
+	}
+
+#login-form img {
+	display: block;
+	margin: auto;
+}
+
+.contenido-rojo {
+	border-color: #d9012e;
+	background-color: #d9012e;
+	color: white;
+}
+
+.titulo {
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 45px;
+	font-weight: bold;
+	color: #7c380d;
+}
+
+.letra-marron {
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;	
+	font-weight: bold;
+	color: #7c380d;
+}
+
+.letra-griss {
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;	
+	font-weight: bold;
+	color: #808080;
+}
+
+.letra-marron-2 {
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;	
+	color: #7c380d;
+}
+
+.letra-acl {
+	font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;	
+	font-weight: bold;
+	color: #d9012e;
+}
+
+.version-app {
+	font-size: 9px;
+	font-weight: bold;
+	color: #808080;
+}
+
+.fondo-barra-superior {
+	background: #d9012e; /* For browsers that do not support gradients */
+	background: linear-gradient(-90deg, #713925, #d9012e);
+}
+
+.icono-menu {
+	font-size: 40px;
+	color: #d9012e;
+	height: 60px;
+}
+
+.icono-usuario {
+	font-size: 40px;
+	color: white; /*#fcf8e3*/
+	height: 60px;
+	width:80px;
+}
+
+.icono-usuario:hover {
+	font-size: 40px;
+	color: #d9012e;
+	height: 60px;
+	width:80px;
+}
+
+.icono-menu-texto {
+	color: #7c380d;
+}
+
+.form_wizard .stepContainer {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: 0 solid #CCC;
+    overflow-x: hidden
+}
+.wizard_horizontal ul.wizard_steps {
+    display: table;
+    list-style: none;
+    position: relative;
+    width: 100%;
+    margin: 0 0 20px
+}
+.wizard_horizontal ul.wizard_steps li {
+    display: table-cell;
+    text-align: center
+}
+.wizard_horizontal ul.wizard_steps li a,
+.wizard_horizontal ul.wizard_steps li:hover {
+    display: block;
+    position: relative;
+    -moz-opacity: 1;
+    filter: alpha(opacity=100);
+    opacity: 1;
+    color: #666
+}
+.wizard_horizontal ul.wizard_steps li a:before {
+    content: "";
+    position: absolute;
+    height: 4px;
+    background: #ccc;
+    top: 20px;
+    width: 100%;
+    z-index: 4;
+    left: 0
+}
+.wizard_horizontal ul.wizard_steps li a.disabled .step_no {
+    background: #ccc
+}
+.wizard_horizontal ul.wizard_steps li a .step_no {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 100px;
+    display: block;
+    margin: 0 auto 5px;
+    font-size: 16px;
+    text-align: center;
+    position: relative;
+    z-index: 5
+}
+.wizard_horizontal ul.wizard_steps li a.selected:before,
+.step_no {
+    background: #d9012e;
+    color: #fff
+}
+.wizard_horizontal ul.wizard_steps li a.done:before,
+.wizard_horizontal ul.wizard_steps li a.done .step_no {
+    background: #CCC;
+    color: #fff
+}
+.wizard_horizontal ul.wizard_steps li:first-child a:before {
+    left: 50%
+}
+.wizard_horizontal ul.wizard_steps li:last-child a:before {
+    right: 50%;
+    width: 50%;
+    left: auto
+}
+.wizard_verticle .stepContainer {
+    width: 80%;
+    float: left;
+    padding: 0 10px
+}
+.actionBar {
+    width: 100%;
+    border-top: 1px solid #ddd;
+    padding: 10px 5px;
+    text-align: right;
+    margin-top: 10px
+}
+.actionBar .buttonDisabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: .65;
+    filter: alpha(opacity=65);
+    box-shadow: none
+}
+.actionBar a {
+    margin: 0 3px
+}
+.wizard_verticle .wizard_content {
+    width: 80%;
+    float: left;
+    padding-left: 20px
+}
+.wizard_verticle ul.wizard_steps {
+    display: table;
+    list-style: none;
+    position: relative;
+    width: 20%;
+    float: left;
+    margin: 0 0 20px
+}
+.wizard_verticle ul.wizard_steps li {
+    display: list-item;
+    text-align: center
+}
+.wizard_verticle ul.wizard_steps li a {
+    height: 80px
+}
+.wizard_verticle ul.wizard_steps li a:first-child {
+    margin-top: 20px
+}
+.wizard_verticle ul.wizard_steps li a,
+.wizard_verticle ul.wizard_steps li:hover {
+    display: block;
+    position: relative;
+    -moz-opacity: 1;
+    filter: alpha(opacity=100);
+    opacity: 1;
+    color: #666
+}
+.wizard_verticle ul.wizard_steps li a:before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    background: #ccc;
+    top: 20px;
+    width: 4px;
+    z-index: 4;
+    left: 49%
+}
+.wizard_verticle ul.wizard_steps li a.disabled .step_no {
+    background: #ccc
+}
+.wizard_verticle ul.wizard_steps li a .step_no {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 100px;
+    display: block;
+    margin: 0 auto 5px;
+    font-size: 16px;
+    text-align: center;
+    position: relative;
+    z-index: 5
+}
+.wizard_verticle ul.wizard_steps li a.selected:before,
+.step_no {
+    background: #d9012e;
+    color: #fff
+}
+.wizard_verticle ul.wizard_steps li a.done:before,
+.wizard_verticle ul.wizard_steps li a.done .step_no {
+    background: #1ABB9C;
+    color: #fff
+}
+.wizard_verticle ul.wizard_steps li:first-child a:before {
+    left: 49%
+}
+.wizard_verticle ul.wizard_steps li:last-child a:before {
+    left: 49%;
+    left: auto;
+    width: 0
+}
+.form_wizard .loader {
+    display: none
+}
+.form_wizard .msgBox {
+    display: none
+}
+
+.detail a, .expand, .jqstooltip, .paging_full_numbers a:hover, .site_title:focus, .site_title:hover, a, a:focus, a:hover {
+    text-decoration: none;
+}

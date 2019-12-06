@@ -1,0 +1,65 @@
+﻿@model WebSaludOcupacional.Models.MantenimientoModel.MantenimientoPerfilesModel
+
+@{
+    ViewBag.Title = "Perfiles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row" role="main">
+    @using (Html.BeginForm())
+    {
+        <h3 class="letra-marron"><i class="fa fa-users"></i> Mantenimiento de perfiles</h3>        
+        <hr />
+        <div class="col-md-8">
+            <table class="table table-hover" id="tbPerfiles">
+                <thead>
+                    <tr>
+                        <th class="contenido-rojo">Perfil</th>
+                        <th class="contenido-rojo"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model.lPerfiles)
+                    {
+                        <tr class="odd">
+                            <td class="letra-marron">@r.Nombre</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-xs custom-btn details"
+                                        data-targeturl="@Url.Action("DatosPerfil", "Mantenimiento", new { id = r.IdPerfil })">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<div id="modal-container" class="modal fade " tabindex="-1" role="dialog" style="overflow-y:auto;">
+
+</div>
+
+<script type="text/javascript">
+    if (typeof NProgress != 'undefined') {
+        NProgress.set(0.3)
+        $(document).ready(function () {
+            NProgress.done();
+        });
+    }
+
+    $(".details").on('click', function (e) {
+        console.log('click');
+        e.preventDefault();
+        $("#modal-container").remove();
+        $.get($(this).data("targeturl"), function (data) {
+            $('<div id="modal-container" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="overflow-y:auto;" >' +
+                '<div class="modal-dialog modal-sm" role="document">' +
+                    '<div class="modal-content" id= "modalbody" >' +
+                        data + '</div></div>').modal('show');
+        });
+    });
+
+</script>
+

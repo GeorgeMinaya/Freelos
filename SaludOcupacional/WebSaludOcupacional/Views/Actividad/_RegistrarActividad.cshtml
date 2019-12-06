@@ -1,0 +1,135 @@
+﻿
+@using Salud.Ocupacional.BE;
+@model ActividadBE.ResponseActividadBE
+
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/Script/WizardJs")
+
+@using (Ajax.BeginForm("RegistrarActividad", "Actividad"
+    , new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "frmActividadR" }
+    , new { id = "frmActividadR", enctype = "multipart/form-data" }))
+{
+    <div class="modal-register">
+        <div class="col-md-11">
+            <div class="modal-title letra-acl Alert-Head" id="myModalLabel">
+                <i class="mdi Alert-Head mdi-bulletin-board"></i> Registrar una nueva actividad
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close Alert-Head" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+         @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-12">
+                <div id="asistente" class="form_wizard wizard_horizontal">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon contenido-rojo"><span class="mdi mdi-domain" aria-hidden="true"></span></span>
+                                    @Html.DropDownListFor(m => m.IDCompany, new SelectList(Model.lCompany, "IDCompany", "Name"), new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon contenido-rojo"><span class="mdi mdi-relative-scale" aria-hidden="true"></span></span>
+                                    @Html.TextBoxFor(m => m.Date, new { @class = "form-control", autocomplete = "off", @id = "datepicker", onfocus = "ValidaFecha();" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon contenido-rojo"><span class="mdi mdi-blur" aria-hidden="true"></span></span>
+                                    @Html.DropDownListFor(m => m.Contract, new SelectList(Model.lContract, "IDContract", "DraegerUser"), new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group clockpicker" data-placement="bottom" data-align="top" data-autoclose="true">
+                                    <span class="input-group-addon contenido-rojo"><span class="mdi mdi-clock-in" aria-hidden="true"></span></span>
+                                    @Html.TextBoxFor(m => m.StartHour, new { value = "", autocomplete = "off", @placeholder = "Hora Inicio", @class = "form-control", @id = "txtInicio", onfocusin = "ValidaHoraIni();", @Title = "Hora Inicio" })
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="far fa-clock"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group clockpicker" data-placement="bottom" data-align="top" data-autoclose="true">
+                                    <span class="input-group-addon contenido-rojo"><span class="mdi mdi-clock-out" aria-hidden="true"></span></span>
+                                    @Html.TextBoxFor(m => m.FinishHour, new { value = "", autocomplete = "off", @placeholder = "Hora Fin", @class = "form-control", @id = "txtFin", onfocusin = "ValidaHoraIni();", @Title = "Hora Fin" })
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="far fa-clock"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon contenido-rojo"><span class="mdi mdi-eraser-variant" aria-hidden="true"></span></span>
+                                    @Html.DropDownListFor(m => m.Respirator, new SelectList(Model.lRespirator, "ID", "Model"), new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon contenido-rojo"><span class="mdi mdi-filter-variant" aria-hidden="true"></span></span>
+                                    @Html.DropDownListFor(m => m.Filter, new SelectList(Model.lFilter, "IDFilter", "Filter"), new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="mdi input-group-addon contenido-rojo"><i class="mdi mdi-format-list-numbers"></i></span>
+                                    @Html.TextBoxFor(m => m.Quantity, new { value = "", autocomplete = "new-password", @placeholder = "Cantidad", @class = "form-control", @id = "txtQuantity", @Title = "Quantity" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="mdi input-group-addon contenido-rojo"><i class="mdi mdi-account-star-variant"></i></span>
+                                    @Html.TextBoxFor(m => m.Supervisor, new { value = "", autocomplete = "new-password", @placeholder = "Supervisor", @class = "form-control", @id = "txtSupervisor", @Title = "Supervisor" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="mdi input-group-addon contenido-rojo"><i class="mdi mdi-format-align-justify"></i></span>
+                                    @Html.TextBoxFor(m => m.Description, new { value = "", autocomplete = "new-password", @placeholder = "Descripción", @class = "form-control", @id = "txtDescription", @Title = "Description" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="ValidaInputs('frmActividadR');" class="btn btn-danger"><i class="fa fa-save"></i> Guardar</button>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @if (ViewBag.Message != null)
+        {
+            <span class="field-validation-error">@ViewBag.Message</span>
+        }
+    </div>
+    @Html.TextBoxFor(m => m.Activo, "True", new { @class = "HiddenFor" })
+
+}

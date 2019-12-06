@@ -1,0 +1,33 @@
+﻿
+@using Salud.Ocupacional.BE;
+@model MenuBE.ResponseMenuBE
+
+@using (Ajax.BeginForm("DeleteMenu", "Menu"
+    , new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "frmMenuD" }
+    , new { id = "frmMenuD", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-Alert-Confirm">
+        <div class="col-md-11">
+            <div class="modal-title letra-acl Alert-Head" id="myModalLabel">
+                <i class="fa mdi mdi-delete"></i> Confirmación de Eliminar
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close Alert-Head" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <h5 class="modal-title letra-marron" id="myModalLabel">
+            Esta seguro de eliminar al menu <strong>@Model.Nombre</strong>
+        </h5>
+        @Html.TextBoxFor(m => m.IdMenu, new { value = @Model.IdMenu, @class = "HiddenFor" })
+        @Html.TextBoxFor(m => m.Activo, "false", new { @class = "HiddenFor" })
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-danger"><i class="fa fa-remove"></i> Eliminar</button>
+    </div>
+}
+

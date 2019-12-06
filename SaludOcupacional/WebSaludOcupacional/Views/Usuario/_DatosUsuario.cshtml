@@ -1,0 +1,94 @@
+﻿@using Salud.Ocupacional.BE;
+@model ResponseLoginBE
+
+@using (Ajax.BeginForm("DatosUsuario", "Usuario"
+    , new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "frmUsuarioM" }
+    , new { id = "frmUsuarioM", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-modificar">
+        <div class="col-md-11">
+            <div class="modal-title letra-acl Alert-Head" id="myModalLabel">
+                <i class="mdi Alert-Head mdi-account-circle"></i> Editar Usuario
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close Alert-Head" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-key" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.DNI, new { @placeholder = "DNI", @autocapitalize = "off", @class = "form-control Disable", @id = "txtLogin", maxlength = "8", onkeypress = "return soloNumeros(event);" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-lock-open" aria-hidden="true"></span></span>
+                        @Html.PasswordFor(m => m.Password, new { value = Model.Password, @placeholder = "Contraseña", @autocapitalize = "off", @class = "form-control", @id = "txtClave", @Title = "Contraseña" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Name, new { @placeholder = "Nombre Completo", @autocapitalize = "off", @class = "form-control", @id = "txtNombrecompleto", @Title = "Nombre Completo" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-gmail" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Email, new { @placeholder = "E-mail", @autocapitalize = "off", @class = "form-control", @id = "txtMail", @Title = "E-Mail" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-star" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.LastName1, new { @placeholder = "Apellido Paterno", @autocapitalize = "off", @class = "form-control", @id = "txtPaterno", @Title = "Apellido Paterno" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-star-variant" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.LastName2, new { @placeholder = "Apellido Materno", @autocapitalize = "off", @class = "form-control", @id = "txtMaterno", @Title = "Apellido Materno" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-addon contenido-rojo"><i class="mdi mdi-account-switch"></i></span>
+                    @Html.DropDownListFor(m => m.Type, new SelectList(Model.perfilList, "IdPerfil", "Nombre"), new { @class = "form-control" })
+                </div>
+            </div>
+            @*<div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><i class="mdi mdi-lan-connect"></i></span>
+                        <label class="form-control letra-marron">
+                            @Html.CheckBoxFor(m => m.Activo, new { @checked = "checked" }) Estado
+                        </label>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" onclick="ValidaInputs('frmUsuarioM');" class="btn btn-danger"><i class="fa fa-save"></i> Guardar</button>
+    </div>
+    @Html.TextBoxFor(m => m.IdUsuario, new { value = @Model.IdUsuario, @class = "HiddenFor" })
+    @Html.TextBoxFor(m => m.Type, new { value = @Model.Type, @class = "HiddenFor" })
+    @Html.TextBoxFor(m => m.Mobile, "Usuarios", new { @class = "HiddenFor" })
+    @Html.TextBoxFor(m => m.Activo, "True", new { @class = "HiddenFor" })
+}

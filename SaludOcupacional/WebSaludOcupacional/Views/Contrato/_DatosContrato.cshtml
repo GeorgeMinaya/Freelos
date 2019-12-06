@@ -1,0 +1,103 @@
+﻿
+@using Salud.Ocupacional.BE;
+@model ContratoBE.ResponseContratoBE
+
+@using (Ajax.BeginForm("DatosContrato", "Contrato"
+    , new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "frmContratoM" }
+    , new { id = "frmContratoM", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-modificar">
+        <div class="col-md-11">
+            <div class="modal-title letra-acl Alert-Head" id="myModalLabel">
+                <i class="mdi Alert-Head mdi-file-document"></i> Editar contrato
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close Alert-Head" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            @*<div class="col-md-6">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon contenido-rojo"><span class="mdi mdi-relative-scale" aria-hidden="true"></span></span>
+                    @Html.DropDownListFor(m => m.DraegerUser, new SelectList(Model.lUsuario, "DNI", "DNI"), new { @class = "form-control" })
+                </div>
+            </div>
+        </div>*@
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-domain" aria-hidden="true"></span></span>
+                        @Html.DropDownListFor(m => m.Company, new SelectList(Model.lCompany, "IDCompany", "Name"), new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-relative-scale" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Amount, new { value = "", autocomplete = "off", @placeholder = "Monto", @class = "form-control", @id = "txtAmount", @Title = "Amount", onkeypress = "return soloNumeros(event);" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-blur" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.InitialDate, new { @class = "form-control", autocomplete = "off", @placeholder = "Fecha Inicio", @id = "InitialDate", onfocus = "ValidaFechaIni();" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-blur" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.FinalDate, new { @class = "form-control", autocomplete = "off", @placeholder = "Fecha Fin", @id = "FinalDate", onfocus = "ValidaFechaFin();" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-key" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Quantity, "", new { value = "", autocomplete = "off", @placeholder = "Cantidad de trabajadores", @class = "form-control", @id = "txtQuantity", onkeypress = "return soloNumeros(event);" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-relative-scale" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Dascription, new { value = "", autocomplete = "off", @placeholder = "Contacto", @class = "form-control", @id = "txtDascription", @Title = "Dascription" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-cellphone-iphone" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Celular, "", new { value = "", autocomplete = "off", @placeholder = "Celular", @class = "form-control", @id = "txtCelular", onkeypress = "return soloNumeros(event);" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-gmail" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Email, new { value = "", autocomplete = "off", @placeholder = "E-mail", @class = "form-control", @id = "txtE-mail", @Title = "E-mail", onfocusout = "return validarEmail('txtE-mail');" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" onclick="ValidaInputs('frmContratoM');" class="btn btn-danger"><i class="fa fa-save"></i> Guardar</button>
+    </div>
+    @Html.TextBoxFor(m => m.IDContract, new { value = @Model.IDContract, @class = "HiddenFor" })
+    @Html.TextBoxFor(m => m.Activo, "true", new { value = "true", @class = "HiddenFor" })
+}

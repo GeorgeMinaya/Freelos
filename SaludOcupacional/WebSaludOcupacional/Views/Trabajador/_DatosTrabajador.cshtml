@@ -1,0 +1,103 @@
+﻿
+@using Salud.Ocupacional.BE;
+@model TrabajadorBE.ResponseTrabajadorBE
+
+@using (Ajax.BeginForm("DatosTrabajador", "Trabajador"
+    , new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "frmTrabajadorM" }
+    , new { id = "frmTrabajadorM", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-modificar">
+        <div class="col-md-11">
+            <div class="modal-title letra-acl Alert-Head" id="myModalLabel">
+                <i class="mdi Alert-Head mdi-bulletin-board"></i> Editar trabajador
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close Alert-Head" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            @*<div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-key" aria-hidden="true"></span></span>
+                        @Html.DropDownListFor(m => m.DNIemployee, new SelectList(Model.lUsuario, "DNI", "DNI"), new { @class = "form-control", @id = "combobox" })
+                    </div>
+                </div>
+            </div>*@
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-key" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.DNIemployee, new { @placeholder = "DNI", autocomplete = "DNI Usuario", @class = "form-control", @id = "txtUsuario", maxlength = "8", onkeypress = "return soloNumeros(event);" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-arrow-compress-all" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Birthdate, new { @class = "form-control", autocomplete = "off", @id = "datepicker", onfocus = "CalendarActivo();" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-relative-scale" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Name, new { value = "", autocomplete = "new-password", @placeholder = "Nombre", @class = "form-control", @id = "txtName", @Title = "Name" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><i class="mdi mdi-worker"></i></span>
+                        @Html.DropDownListFor(m => m.Occupation, new SelectList(Model.lOccupation, "ID", "Occupation"), new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><i class="mdi mdi-calendar-clock"></i></span>
+                        @Html.DropDownListFor(m => m.Schedule, new SelectList(Model.lSchedule, "ID", "Schedule"), new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><i class="mdi mdi-city"></i></span>
+                        @Html.DropDownListFor(m => m.Company, new SelectList(Model.lCompany, "IDCompany", "Name"), new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><i class="mdi mdi-alert-circle-outline"></i></span>
+                        @Html.DropDownListFor(m => m.RiskFactor, new SelectList(Model.lRiskFactor, "ID", "RiskFactor"), new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><i class="mdi mdi-book"></i></span>
+                        @Html.DropDownListFor(m => m.WorkCondition, new SelectList(Model.lWorkCondition, "ID", "WorkCondition"), new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" onclick="ValidaInputs('frmTrabajadorM');" class="btn btn-danger"><i class="fa fa-save"></i> Guardar</button>
+    </div>
+    @Html.TextBoxFor(m => m.IdTrabajador, new { value = @Model.IdTrabajador, @class = "HiddenFor" })
+    @Html.TextBoxFor(m => m.Activo, "true", new { value = "true", @class = "HiddenFor" })
+}

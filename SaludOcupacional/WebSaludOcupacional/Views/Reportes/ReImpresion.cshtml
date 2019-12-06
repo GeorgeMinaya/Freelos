@@ -1,0 +1,129 @@
+﻿@model WebSaludOcupacional.Models.ReportesModel.ReImpresion
+
+@{
+    ViewBag.Title = "ACL || MegaCentro || Reimpresión";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    if (Model.Items == null)
+    {
+        <div class="row">
+            <h2 class="letra-marron"><i class="fa fa-file-text-o"></i> Ingrese la guía</h2>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="col-md-4 col-md-offset-4" role="main" style="vertical-align: central">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.NumeroGuia, new { @placeholder = "Número de guía", @autocapitalize = "off", @class = "form-control", @maxlength = "16" })
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger custom-btn" type="submit">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                Buscar
+                            </button>
+                        </span>
+                    </div>
+                    <span class="text-danger">
+                        @Model.ErrorImp.ErrorImpresora
+                    </span>
+                    @Html.ValidationMessageFor(m => m.NumeroGuia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-4 table-hover">
+                <div class="input-group">
+                    <span class="input-group-addon contenido-rojo"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Nro Guia :</span>
+                    <span class="form-control letra-marron ">@Model.NumeroGuia</span>
+                    @Html.HiddenFor(m => m.NumeroGuia)
+                </div>
+            </div>
+            <div class="col-md-3 col-md-offset-3">
+                <div class="input-group">
+                    <span class="input-group-addon contenido-rojo"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Impresora</span>
+                    @Html.DropDownListFor(m => m.IpImpresora, new SelectList(Model.Impresoras, "IP", "Descripcion"), new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-danger btn-sm custom-btn" id="btnImprimir" name="btnImprimir"
+                        data-idorden="@Model.IdOrdenCarga">
+                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Reimprimir
+                </button>
+            </div>
+            <br />
+            <hr />
+            <table class="table table-hover" id="tbCarga">
+                <thead>
+                    <tr>
+                        <th class="contenido-rojo">Material</th>
+                        <th class="contenido-rojo">Producto</th>
+                        <th class="contenido-rojo">Tipo</th>
+                        <th class="contenido-rojo">CJ/PQ</th>
+                        <th class="contenido-rojo">Unidad</th>
+                        <th class="contenido-rojo">CJ/PQ</th>
+                        <th class="contenido-rojo">Unidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model.Items)
+            {
+                <tr class="odd">
+                    <td class="letra-marron">@r.Material</td>
+                    <td class="letra-marron">@r.Descripcion</td>
+                    <td class="letra-marron">@r.TipoProducto</td>
+                    <td class="letra-marron">@Convert.ToInt32(r.Unidad)</td>
+                    <td class="letra-marron">@Convert.ToInt32(r.SubUnidad)</td>
+                    <td class="letra-marron">@Convert.ToInt32(r.UnidadCambio)</td>
+                    <td class="letra-marron">@Convert.ToInt32(r.SubUnidadCambio)</td>
+                </tr>
+    }
+                </tbody>
+            </table>
+        </div>
+    }
+}
+
+<script type="text/javascript">
+    function ShowAlert(Active) {
+        alert(Active)
+    }
+    if (typeof NProgress != 'undefined') {
+        NProgress.set(0.3)
+        $(document).ready(function () {
+            NProgress.done();
+        });
+    }
+
+    //$('#btnImprimir').click(function (e) {
+    //    //debugger
+    //    e.preventDefault();
+    //    var id = $(this).data('idorden');
+    //    var ip = $('#IpImpresora')[0].value;
+    //    var NumeroGuia = $('#NumeroGuia')[0].value;
+
+    //    if (id != '' && ip != '') {
+    //        if (typeof NProgress != 'undefined') {
+    //            NProgress.start();
+    //        }
+    //        $.ajax({
+    //            url: '/Reportes/Imprimir',
+    //            data: { 'id': id, 'ip': ip, 'NumeroGuia': NumeroGuia },
+    //            type: 'post',
+    //            sucess: function (Data) {
+    //                alert(Data);
+    //                NProgress.done();
+    //            }
+    //        });
+    //    }
+    //});
+
+</script>

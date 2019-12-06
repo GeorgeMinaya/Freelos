@@ -1,0 +1,185 @@
+﻿@model WebSaludOcupacional.Models.LoginModel
+
+@{
+    Layout = null;
+    ViewBag.Title = "Iniciar Sesión";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="icon" type="image/png" href="~/favicon-32x32.png" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    @*@Styles.Render("~/Content/assets")*@
+    <!-- Custom CSS -->
+    @Styles.Render("~/Content/css2")
+</head>
+<body class="login-page">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div id="loader-wrapper" class="Oculto">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+    @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @id = "login-form" }))
+    {
+        <div class="login-box">
+            @Html.AntiForgeryToken()
+            <div class="logo">
+                <a href="javascript:void(0);">Admin<b>GSO</b></a>
+                <small>GESTIÓN DE SALUD OCUPACIONAL</small>
+            </div>
+            @*<img src="@Url.Content("~/Content/Imagenes/logofondo.jpg")" style="position:absolute">*@
+            <div class="card col-xs-12">
+                <div class="body">
+                    <form id="sign_in" method="POST">
+                        <div class="msg"></div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">person</i>
+                            </span>
+                            <div class="form-line">
+                                @Html.TextBoxFor(m => m.NombreLogin, new { @placeholder = "Usuario", @autocapitalize = "off", @class = "form-control", maxlength = "8", onkeypress = "return soloNumeros(event);" })
+                                @*<input type="text" class="form-control" name="username" placeholder="DNI" required autofocus>*@
+                            </div>
+                            @Html.ValidationMessageFor(m => m.NombreLogin, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">lock</i>
+                            </span>
+                            <div class="form-line">
+                                @Html.PasswordFor(m => m.Contrasena, new { @placeholder = "Contraseña", @autocapitalize = "off", @class = "form-control" })
+                                @*<input type="password" class="form-control" name="password" placeholder="Contraseña" required>*@
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Contrasena, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-8 p-t-5">
+                                <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-pink">
+                                <label for="rememberme">Recordar </label>
+                            </div>
+                            <div class="col-xs-4">
+                                <button class="btn btn-block bg-pink waves-effect" type="submit">LOGIN</button>
+                            </div>
+                        </div>
+                        <div class="col-md-11" style="background-color:#7c380d"></div>
+                        <div class="col-md-12">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <br />
+                        </div>
+                        <div class="row m-t-15 m-b--20">
+                            @*<div class="col-xs-6">
+                                    <a href="@Url.Action("MantenimientoUsuario", "Login")">Registrar Nuevo!</a>
+                                </div>*@
+                            <div class="col-xs-6 align-right">
+                                <a href="@Url.Action("Password", "Login")">Olvido Conrtaseña?</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        if (ViewBag.Message != null)
+        {
+            <span class="field-validation-error">@ViewBag.Message</span>
+        }
+    }
+
+    <!--stickey kit -->
+    @Scripts.Render("~/bundles/jquery2")
+    <!-- Chart JS -->
+    @*@Styles.Render("~/bundles/js")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/bootstrap")*@
+
+    <script type="text/javascript">
+        //if (typeof NProgress != 'undefined') {
+        //    NProgress.start();
+        //    $(document).ready(function () {
+        //        NProgress.done();
+        //    });
+        //}
+        $(document).ready(function () {
+            $("#NombreLogin").val(getCookie("NombreLogin"))
+            $("#Contrasena").val(getCookie("Contrasena"))
+            if (getCookie("rememberme") == "true") {
+                $("#rememberme").attr('checked', getCookie("rememberme"));
+            }
+        });
+
+        $('#login-form').submit(function () {
+            cName = $("#NombreLogin").val();
+            CPass = $("#Contrasena").val();
+            if (document.getElementById("rememberme").checked == true) {
+                setCookie("NombreLogin", cName, 30);
+                setCookie("Contrasena", CPass, 30);
+                setCookie("rememberme", true, 30);
+            } else {
+                eliminarCookie("NombreLogin");
+                eliminarCookie("Contrasena");
+                setCookie("rememberme", false, 30);
+            }
+            showPreloader();
+        });
+        function showPreloader() {
+            $("#loader-wrapper").removeClass("Oculto").addClass("Activo");
+        }
+
+        function hidePreloader() {
+            $("#loader-wrapper").removeClass("Activo").addClass("Oculto");
+        }
+
+        /***************************************/
+        //MANEJO DE COOKIES
+        /***************************************/
+        //Crear una cookie
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        }
+        //Obtener datos de una cookie
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+        //Comprobar si existe una cookie
+        function checkCookie(cname) {
+            var resul = false;
+            var username = getCookie(cname);
+            if (username != "") {
+                resul = true;
+            }
+            return resul;
+        }
+        //Eliminar una cookie
+        function eliminarCookie(cname) {
+            return document.cookie = cname + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        }
+    </script>
+    <hr />
+    <footer class="show-on-medium-and-up">
+        <div class="footerWhite sparkline small">&copy; @DateTime.Now.Year - Draeger Perú SAC</div>
+    </footer>
+
+    @Scripts.Render("~/Scripts/js/Master")
+</body>
+</html>

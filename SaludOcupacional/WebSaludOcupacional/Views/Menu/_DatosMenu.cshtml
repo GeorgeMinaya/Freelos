@@ -1,0 +1,63 @@
+﻿
+@using Salud.Ocupacional.BE;
+@model MenuBE.ResponseMenuBE
+
+@using (Ajax.BeginForm("DatosMenu", "Menu"
+    , new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "frmMenuM" }
+    , new { id = "frmMenuM", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-modificar">
+        <div class="col-md-11">
+            <div class="modal-title letra-acl Alert-Head" id="myModalLabel">
+                <i class="mdi Alert-Head mdi-menu"></i> Editar menu
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close Alert-Head" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-key" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Nombre, "", new { value = "", autocomplete = "Nombre Menu", @placeholder = "Nombre Menu", @class = "form-control", @id = "txtNombre_Menu" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-relative-scale" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Icono, new { value = "", autocomplete = "new-password", @placeholder = "Icono Menu", @class = "form-control", @id = "txtIcono", @Title = "Icono" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-blur" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.URL, new { @placeholder = "URL Menu", @autocapitalize = "off", @class = "form-control", @id = "txtURL", @Title = "URL Menu" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="mdi input-group-addon contenido-rojo"><i class="fa mdi-blackberry"></i></span>
+                        @Html.DropDownListFor(m => m.TypeUser, new SelectList(Model.lTipoMenu, "Id", "UserType"), new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" onclick="ValidaInputs('frmMenuM');" class="btn btn-danger"><i class="fa fa-save"></i> Guardar</button>
+    </div>
+    @Html.TextBoxFor(m => m.IdMenu, new { value = @Model.IdMenu, @class = "HiddenFor" })
+    @Html.TextBoxFor(m => m.Activo, "true", new { value = "true", @class = "HiddenFor" })
+}

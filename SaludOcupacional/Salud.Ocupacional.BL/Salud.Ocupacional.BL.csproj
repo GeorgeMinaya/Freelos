@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{559153BA-B1B5-4F98-AC6E-86A3EC017E98}</ProjectGuid>
+    <ProjectTypeGuids>{32f31d43-81cc-4c15-9de6-3fc5453562b6};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Salud.Ocupacional.BL</RootNamespace>
+    <AssemblyName>Salud.Ocupacional.BL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ACL.Community, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Helpers\Librerias\ACL.Community.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activities" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helpers\ConstantesHelper.cs" />
+    <Compile Include="Interfaces\IActividadBL.cs" />
+    <Compile Include="Interfaces\IArchivoBL.cs" />
+    <Compile Include="Interfaces\IMarcaModeloBL.cs" />
+    <Compile Include="Interfaces\ICondicionBL.cs" />
+    <Compile Include="Interfaces\IGuardiaBL.cs" />
+    <Compile Include="Interfaces\IOcupacionBL.cs" />
+    <Compile Include="Interfaces\IFactorRiesgoBL.cs" />
+    <Compile Include="Interfaces\IContratoBL.cs" />
+    <Compile Include="Interfaces\ITrabajadorBL.cs" />
+    <Compile Include="Interfaces\IMenuBL.cs" />
+    <Compile Include="Interfaces\IEmpresaBL.cs" />
+    <Compile Include="Interfaces\IPerfilBL.cs" />
+    <Compile Include="Interfaces\IDoctorBL.cs" />
+    <Compile Include="Interfaces\IUsuarioBL.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SorceCodes\ActividadBL.cs" />
+    <Compile Include="SorceCodes\ArchivoBL.cs" />
+    <Compile Include="SorceCodes\MarcaModeloBL.cs" />
+    <Compile Include="SorceCodes\CondicionBL.cs" />
+    <Compile Include="SorceCodes\GuardiaBL.cs" />
+    <Compile Include="SorceCodes\OcupacionBL.cs" />
+    <Compile Include="SorceCodes\FactorRiesgoBL.cs" />
+    <Compile Include="SorceCodes\ContratoBL.cs" />
+    <Compile Include="SorceCodes\TrabajadorBL.cs" />
+    <Compile Include="SorceCodes\MenuBL.cs" />
+    <Compile Include="SorceCodes\EmpresaBL.cs" />
+    <Compile Include="SorceCodes\PerfilBL.cs" />
+    <Compile Include="SorceCodes\DoctorBL.cs" />
+    <Compile Include="SorceCodes\UsuarioBL.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Helpers\Librerias\ACL.Community.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Salud.Ocupacional.BE\Salud.Ocupacional.BE.csproj">
+      <Project>{c4c0fdbd-c91e-4fb3-bf7e-b9e51dc8311a}</Project>
+      <Name>Salud.Ocupacional.BE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Salud.Ocupacional.DA\Salud.Ocupacional.DA.csproj">
+      <Project>{68f38a3c-a134-4c8f-b77f-59c7124b60b2}</Project>
+      <Name>Salud.Ocupacional.DA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Salud.Ocupacional.DM\Salud.Ocupacional.DM.csproj">
+      <Project>{D8AB0EDD-33AE-4D08-BB06-8064722982C3}</Project>
+      <Name>Salud.Ocupacional.DM</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

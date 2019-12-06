@@ -1,0 +1,39 @@
+﻿
+@using Salud.Ocupacional.BE;
+@model CondicionBE.ResponseCondicionBE
+
+@using (Ajax.BeginForm("DatosCondicion", "Condicion"
+    , new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "frmCondicionM" }
+    , new { id = "frmCondicionM", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-modificar">
+        <div class="col-md-11">
+            <div class="modal-title letra-acl Alert-Head" id="myModalLabel">
+                <i class="mdi Alert-Head mdi-chemical-weapon"></i> Editar condición
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close Alert-Head" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-relative-scale" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.WorkCondition, new { value = "", autocomplete = "new-password", @placeholder = "Nombre condición", @class = "form-control", @id = "txtCondicion", @Title = "Condición" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" onclick="ValidaInputs('frmCondicionM');" class="btn btn-danger"><i class="fa fa-save"></i> Guardar</button>
+    </div>
+    @Html.TextBoxFor(m => m.ID, new { value = @Model.ID, @class = "HiddenFor" })
+        @Html.TextBoxFor(m => m.Activo, "true", new { value = "true", @class = "HiddenFor" })
+}

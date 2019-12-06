@@ -1,0 +1,59 @@
+﻿@using WebSaludOcupacional.Models;
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>    
+    <h4 class="modal-title letra-marron" id="myModalLabel">
+        <i class="fa fa-list-alt"></i> Detalle de la orden : @Html.Label(((TransportistaModel.OrdenCargaModel)ViewBag.Orden).NumeroGuia)</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6">
+            <h6 class="letra-marron"><i class="fa fa-pencil-square-o"></i> Supervisor : @Html.Label(((TransportistaModel.OrdenCargaModel)ViewBag.Orden).NombreSupervisor)</h6>
+        </div>
+        <div class="col-md-6">
+            <h6 class="letra-marron"><i class="fa fa-truck"></i> Transportista : @Html.Label(((TransportistaModel.OrdenCargaModel)ViewBag.Orden).NombreTransportista)</h6>
+        </div>
+        @*<div class="col-xs-4">
+            <h6 class="letra-marron"><i class="fa fa-calendar"></i> Fecha entrega : @DateTime.ParseExact(((TransportistaModel.OrdenCargaModel)ViewBag.Orden).FechaEntrega, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).ToShortDateString() </h6>
+        </div>*@
+    </div>    
+    
+    <table class="table table-hover table-responsive" id="tbDetalle" >
+        <thead>
+            <tr>
+                <th class="contenido-rojo">Código</th>
+                <th class="contenido-rojo">Material</th>
+                <th class="contenido-rojo">CJ/PQ</th>
+                <th class="contenido-rojo">Unidad</th>
+                <th class="contenido-rojo">CJ/PQ</th>
+                <th class="contenido-rojo">Unidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (TransportistaModel.ItemModel r in ViewBag.List)
+            {
+                <tr class="odd">
+                    <td class="letra-marron-2">@r.Material</td>
+                    <td class="letra-marron-2">@r.Descripcion</td>
+                    <td class="letra-marron-2">@string.Format("{0:F0}", r.Unidad)</td>
+                    <td class="letra-marron-2">@string.Format("{0:F0}", r.SubUnidad)</td>
+                    <td class="letra-marron-2">@r.UnidadCambio</td>
+                    <td class="letra-marron-2">@r.SubUnidadCambio</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+<div class="modal-footer">    
+    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-mail-forward"></i></button>
+</div>
+
+<script type="text/javascript">
+    //$('#tbDetalle').DataTable({
+    //    'paging' : false
+    //});
+    
+</script>

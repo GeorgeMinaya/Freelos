@@ -1,0 +1,129 @@
+﻿@using WebSaludOcupacional.Models;
+
+@model MantenimientoModel.DatosImpresoraModel
+
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/Script/WizardJs")
+
+@using (Ajax.BeginForm("RegistrarImpresora", "Mantenimiento"
+    , new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "frmReg" }
+    , new { id = "frmReg", enctype = "multipart/form-data" }))
+{
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title letra-marron" id="myModalLabel">
+            <i class="fa fa-user"></i> Editar la Impresora 
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Descripcion, new { @placeholder = "Descripcion", @autocapitalize = "off", @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="glyphicon glyphicon-print" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.IP, new { @placeholder = "IP", @autocapitalize = "off", @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></span>
+                        <div class="letra-marron form-control">@Model.Centros</div>
+                    </div>
+                </div>
+            </div>
+            @for (int i = 0; i < Model.Perfiles.Count; i++) {
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon contenido-rojo"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+                            <div class="letra-marron form-control">
+                                @Html.CheckBoxFor(m => m.Perfiles[i].Activo) @Html.HiddenFor(m => m.Perfiles[i].Activo)@Html.HiddenFor(m => m.Perfiles[i].IdPerfil)
+                                @Html.DisplayFor(m => m.Perfiles[i].Nombre) @Html.HiddenFor(m => m.Perfiles[i].Nombre)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @Html.HiddenFor(m => m.IdImpresora)
+            <div class="col-md-12">
+                <div class="checkbox">
+                    <label class="letra-marron">
+                        @Html.CheckBoxFor(m => m.Activo) Activo
+                    </label>
+                </div>
+            </div>    
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Guardar</button>
+        @*<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-mail-forward"></i></button>*@
+    </div>
+}
+
+
+@*<div class="modal-footer">
+        <button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> crear</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-mail-forward"></i></button>
+    </div>*@
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#asistente').smartWizard({
+            labelNext: 'Adelante',
+            labelPrevious: 'Atrás',
+            labelFinish: 'Grabar',
+            onFinish: onFinish,
+            onShowStep: onShowStep
+        });
+
+        $(".buttonNext").addClass("btn btn-danger btn-sm");
+        $(".buttonPrevious").addClass("btn btn-danger btn-sm");
+        $(".buttonFinish").addClass("btn btn-danger btn-sm");
+
+    });
+
+    function onShowStep() {
+        if ($('#txtLogin').val() != '' && $('#txtClave').val() != '') {
+            var sUsuario = $('#txtLogin').val();
+            var sClave = $('#txtClave').val();
+
+            $.getJSON(
+                '@Url.Action("validarUsuario", "mantenimiento")', // <-- cuando es json solo funciona con minuscula
+                { 'sUsuario': sUsuario, 'sClave': sClave },
+                function (data) {
+                    //debugger;
+                    if (data) {
+                        $('#txtNombreLogin').val(data.NombreLogin);
+                        $('#txtNombreLogin').prop("disabled", true);
+                    }
+                    else {
+                        $('#txtNombreLogin').val("");
+                        $('#txtNombreLogin').prop("disabled", false);
+                    }//$(".buttonNext").click();
+                });
+        }
+    }
+
+    function onFinish() {
+        //debugger;
+        if ($('#txtLogin').val() != '' && $('#txtClave').val() != '' && $('#txtNombreCompleto').val() != '') {
+            $('#frmReg').submit();
+        }
+        else {
+            //$('span').text("No se ha ingresado todos los campos").show().fadeOut(1500);
+            event.preventDefault();
+        }
+    }
+
+</script>

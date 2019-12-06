@@ -1,0 +1,76 @@
+﻿@model WebSaludOcupacional.Models.MantenimientoModel.DatosPerfilModel
+
+@using (Ajax.BeginForm("DatosPerfil", "Mantenimiento"
+    , new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "frmDatos" }
+    , new { id = "frmDatos", enctype = "multipart/form-data" }))
+{
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title letra-marron" id="myModalLabel">
+            <i class="fa fa-gear"></i> Datos del perfil @Html.HiddenFor(m => m.IdPerfil)
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Nombre, new { @placeholder = "Perfil", @autocapitalize = "off", @class = "form-control" })
+                    </div>
+                </div>
+                <div class="checkbox">
+                    <label class="letra-marron">
+                        @Html.CheckBoxFor(m => m.Activo) Activo
+                    </label>
+                </div>
+            </div>            
+            
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover" id="tbCentros">
+                    <thead>
+                        <tr>
+                            <th class="contenido-rojo">Asignar</th>
+                            <th class="contenido-rojo">Acceso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.lOpciones.Count; i++)
+                        {
+                            <tr>
+                                <td class="letra-marron">@Html.CheckBoxFor(m => m.lOpciones[i].Activo) @Html.HiddenFor(m => m.lOpciones[i].Activo)</td>
+                                <td class="letra-marron">@Html.DisplayFor(m => m.lOpciones[i].Nombre) @Html.HiddenFor(m => m.lOpciones[i].IdMenu)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Guardar</button>
+        @*<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-mail-forward"></i></button>*@
+    </div>
+}
+
+<script type="text/javascript">
+    //var table = "";
+
+    $(document).ready(function () {
+
+        //table = $('#tbCentros').DataTable({
+        //    'paging': false,
+        //    'search': false
+        //});
+
+    });
+
+
+</script>
+

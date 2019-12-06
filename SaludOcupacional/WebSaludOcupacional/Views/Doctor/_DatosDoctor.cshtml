@@ -1,0 +1,73 @@
+﻿
+@using Salud.Ocupacional.BE;
+@model DoctorBE.ResponseDoctoreBE
+
+@using (Ajax.BeginForm("DatosDoctor", "Doctor"
+    , new AjaxOptions() { HttpMethod = "Post", UpdateTargetId = "frmDoctorM" }
+    , new { id = "frmDoctorM", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-modificar">
+        <div class="col-md-11">
+            <div class="modal-title letra-acl Alert-Head" id="myModalLabel">
+                <i class="mdi Alert-Head mdi-bulletin-board"></i> Editar doctor
+            </div>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="close Alert-Head" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group ui-widget">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-account-key" aria-hidden="true"></span></span>
+                        @Html.DropDownListFor(m => m.DNIdoctor, new SelectList(Model.lUsuario, "DNI", "DNI"), new { @class = "form-control", @id = "combobox" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-contact-mail" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.Specialism, new { value = "", autocomplete = "new-password", @placeholder = "Especialidad", @class = "form-control", @id = "txtSpecialism", @Title = "Contraseña" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-note-text" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.CMP, new { @placeholder = "CMP", @autocapitalize = "off", @class = "form-control", @id = "txtCMP", @Title = "Nombre Completo" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon contenido-rojo"><span class="mdi mdi-numeric" aria-hidden="true"></span></span>
+                        @Html.TextBoxFor(m => m.RENumber, new { @placeholder = "Registro RNE", @autocapitalize = "off", @class = "form-control", @id = "txtRENumber", @Title = "E-Mail" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="mdi input-group-addon contenido-rojo"><i class="fa mdi-city"></i></span>
+                        @Html.DropDownListFor(m => m.Company, new SelectList(Model.lEmpresa, "IDCompany", "Name"), new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" onclick="ValidaInputs('frmDoctorM');" class="btn btn-danger"><i class="fa fa-save"></i> Guardar</button>
+    </div>
+    @Html.TextBoxFor(m => m.IdDoctor, new { value = @Model.IdDoctor, @class = "HiddenFor" })
+    @Html.TextBoxFor(m => m.Activo, "true", new { value = "true", @class = "HiddenFor" })
+}

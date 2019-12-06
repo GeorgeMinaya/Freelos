@@ -1,0 +1,179 @@
+﻿@model WebSaludOcupacional.Models.MantenimientoModel.MantenimientoOcupacionModel
+
+@{
+    ViewBag.Title = "Sealcheckchip - " + Model.Usuario.perfilList.FirstOrDefault(x => x.IdPerfil.Equals(Model.Usuario.Type)).Nombre;
+    ViewBag.TextList = "Listado Maestro Ocupaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.classModal = null;
+}
+
+<div class="col-lg-12" role="main">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-block bg-info">
+                    <h4 class="text-white card-title"><i class="fa fa-gears"></i> Mantenimiento de Ocupaciones</h4>
+
+                </div>
+                <div class="card-block">
+                    <div class="message-box contact-box">
+                        <h2 class="add-ct-btn">
+                            <button type="button" class="btn btn-circle btn-lg btn-success waves-effect waves-dark" id="regNuevo" name="regNuevo"
+                                    data-targeturl="@Url.Action("RegistrarOcupacion", "Ocupacion")">
+                                +
+                            </button>
+                        </h2>
+                        <table class="table table-hover" id="tbUsurios">
+                            <thead>
+                                <tr>
+                                    <th style="width:10%">ID</th>
+                                    <th>Nombre</th>
+                                    <th style="width:7.5%"></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var r in Model.lOcupacion)
+                                {
+                                    <tr class="odd" id="RowsCont">
+                                        <td class="letra-marron">@r.ID</td>
+                                        <td class="letra-marron">@r.Occupation</td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-xs custom-btn details"
+                                                    data-target="@Url.Action("DatosOcupacion", "Ocupacion" , new { id=r.ID})"
+                                                    data-targeturl="@Url.Action("DatosOcupacion", "Ocupacion" , new { id=r.ID})">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-xs custom-btn delete"
+                                                    data-target="@Url.Action("DeleteOcupacion", "Ocupacion" , new { id=r.ID})"
+                                                    data-targeturl="@Url.Action("DeleteOcupacion", "Ocupacion" , new { id=r.ID})">
+                                                <i class="fa fa-remove"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        if (@ViewBag.Message != null)
+        {
+            <script>
+                setTimeout('ModalOcultoAutomatico()', 3000);
+            </script>
+            if (ViewBag.Message.Estado != 0)
+            {
+                ViewBag.classModal = "modal-Alert-Error";
+            }
+            else
+            {
+                ViewBag.classModal = "modal-Alert-Ok";
+            }
+            <div id="modal-Alert" class="modal fade" tabindex="-1" role="dialog" style="overflow-y:auto;">
+                <div class="modal-dialog " role="document">
+                    <div class="modal-content" id="modalbody">
+                        <div class="@ViewBag.classModal">
+                            <div class="col-md-11">
+                                <div class="modal-title letra-acl Alert-Head" id="myModalLabel">
+                                    <i class="mdi Alert-Head mdi-file-find"></i> @ViewBag.Message.Title
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" class="close Alert-Head" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            @ViewBag.Message.Message
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+
+</div>
+
+<!-- Modal -->
+<div id="modal-registro" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y:auto;">
+
+</div>
+
+<div id="modal-container" class="modal fade" tabindex="-1" role="dialog" style="overflow-y:auto;">
+
+</div>
+
+<div id="modal-Confirm-Alert" class="modal fade" tabindex="-1" role="dialog" style="overflow-y:auto;">
+
+</div>
+
+<script type="text/javascript">
+    if (typeof NProgress != 'undefined') {
+        NProgress.set(0.3)
+        $(document).ready(function () {
+            NProgress.done();
+        });
+    }
+
+    var table = '';
+    $(document).ready(function () {
+        $('#modal-Alert').modal('show');
+        table = $('#tbUsurios').DataTable({
+            'paging': false
+        });
+    });
+
+    function soloNumeros(e) {
+        var key = window.Event ? e.which : e.keyCode
+        return (key >= 48 && key <= 57)
+    }
+
+    $("#regNuevo").on('click', function (e) {
+        showPreloader();
+        console.log('click');
+        e.preventDefault();
+        $("#modal-registro").remove();
+        $.get($(this).data("targeturl"), function (data) {
+            $('<div id="modal-container" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="overflow-y:auto;" >' +
+                '<div class="modal-dialog " role="document">' +
+                '<div class="modal-content" id= "modalbody" >' +
+                data + '</div></div>').modal('show');
+            hidePreloader();
+            $("#txtClave").attr("type", "password");
+        });
+    });
+
+    $(".delete").on('click', function (e) {
+        showPreloader();
+        console.log('click');
+        e.preventDefault();
+        $("#modal-Confirm-Alert").remove();
+        $.get($(this).data("target"), function (data) {
+            $('<div id="modal-Confirm-Alert" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="overflow-y:auto;" >' +
+                '<div class="modal-dialog " role="document">' +
+                '<div class="modal-content" id= "modalbody" >' +
+                data + '</div></div>').modal('show');
+            hidePreloader();
+        });
+    });
+
+    $(".details").on('click', function (e) {
+        showPreloader();
+        console.log('click');
+        e.preventDefault();
+        $("#modal-container").remove();
+        $.get($(this).data("target"), function (data) {
+            $('<div id="modal-container" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="overflow-y:auto;" >' +
+                '<div class="modal-dialog " role="document">' +
+                '<div class="modal-content" id= "modalbody" >' +
+                data + '</div></div>').modal('show');
+            hidePreloader();
+        });
+    });
+</script>

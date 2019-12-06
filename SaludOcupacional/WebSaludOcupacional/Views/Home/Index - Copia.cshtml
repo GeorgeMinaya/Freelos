@@ -1,0 +1,50 @@
+﻿@using WebSaludOcupacional.Models
+
+@model BaseModel
+
+@{
+    ViewBag.Title = "ACL || Menú principal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-10 col-md-offset-1" role="main">
+        <div class="col-md-12"><br /></div>
+        <div class="list-group center-block">
+            @foreach (var r in Model.Usuario.menuList)
+            {
+                var ClassList = "";
+                if (@r.URL == null)
+                {
+                    ClassList = "background-color: #e2e2e2;";
+                }
+                if (@r.IdMenu == 1)
+                {
+                    <a href="@r.URL" class="list-group-item-heading list-group-item-warning col-md-6 col-xs-12 ingresar" style="border-right:4px solid #fff; @ClassList">
+                        <div class="col-md-12" style="height:90px;">
+                            <div class="col-md-2"><br /><span class="glyphicon @r.Icono icono-menu"></span></div>
+                            <div class="col-md-10 icono-menu-texto">
+                                <h3>@r.Nombre</h3>
+                                <p style="font-size:11px">@r.Nombre</p>
+                            </div>
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $('.ingresar').on('click', function (e) {
+        if (typeof NProgress != 'undefined') {
+            NProgress.start();
+        }
+    });
+
+</script>
+
+
+
